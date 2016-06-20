@@ -87,6 +87,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Categorys\Category.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Errors\Error.cs" />
+    <Compile Include="Logs\Log.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Performances\Performance.cs" />
     <Compile Include="TaskManagerConsts.cs" />
     <Compile Include="TaskManagerCoreModule.cs" />
     <Compile Include="Authorization\TaskManagerAuthorizationProvider.cs" />
@@ -102,9 +109,12 @@
     <Compile Include="Authorization\Roles\Role.cs" />
     <Compile Include="Authorization\Roles\RoleManager.cs" />
     <Compile Include="Authorization\Roles\RoleStore.cs" />
+    <Compile Include="Tasks\Task.cs" />
+    <Compile Include="TempDatas\TempData.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Users\UserManager.cs" />
     <Compile Include="Users\UserStore.cs" />
+    <Compile Include="Versions\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

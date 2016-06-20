@@ -88,6 +88,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -95,6 +96,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Categorys\CategoyAppService.cs" />
+    <Compile Include="Categorys\Dto\CategoryListInput.cs" />
+    <Compile Include="Categorys\Dto\CategoryListOutput.cs" />
+    <Compile Include="Categorys\Dto\CreateCategoryInput.cs" />
+    <Compile Include="Categorys\ICategoyAppService.cs" />
+    <Compile Include="Commands\CommandAppService.cs" />
+    <Compile Include="Commands\Dto\CommandListInput.cs" />
+    <Compile Include="Commands\Dto\CommandListOutput.cs" />
+    <Compile Include="Commands\Dto\CreateCommandInput.cs" />
+    <Compile Include="Commands\ICommandAppService.cs" />
+    <Compile Include="DataTablesRequest.cs" />
+    <Compile Include="DataTablesResponse.cs" />
+    <Compile Include="Nodes\Dto\CreateNodeInput.cs" />
+    <Compile Include="Nodes\Dto\NodeListInput.cs" />
+    <Compile Include="Nodes\Dto\NodeListOutput.cs" />
+    <Compile Include="Nodes\INodeAppService.cs" />
+    <Compile Include="Nodes\NodeAppService.cs" />
     <Compile Include="TaskManagerApplicationModule.cs" />
     <Compile Include="TaskManagerAppServiceBase.cs" />
     <Compile Include="MultiTenancy\Dto\CreateTenantInput.cs" />
@@ -104,7 +122,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\IRoleAppService.cs" />
     <Compile Include="Roles\Dto\UpdateRolePermissionsInput.cs" />
+    <Compile Include="Tasks\Dto\CreateTaskInput.cs" />
+    <Compile Include="Tasks\Dto\TaskDetailOutput.cs" />
+    <Compile Include="Tasks\Dto\TaskListInput.cs" />
+    <Compile Include="Tasks\Dto\TaskListOutput.cs" />
+    <Compile Include="Tasks\ITaskAppService.cs" />
+    <Compile Include="Tasks\TaskAppService.cs" />
     <Compile Include="Users\Dto\CreateUserInput.cs" />
+    <Compile Include="Users\Dto\UserListInput.cs" />
+    <Compile Include="Users\Dto\UserListOutput.cs" />
     <Compile Include="Users\IUserAppService.cs" />
     <Compile Include="Roles\RoleAppService.cs" />
     <Compile Include="Sessions\Dto\GetCurrentLoginInformationsOutput.cs" />
