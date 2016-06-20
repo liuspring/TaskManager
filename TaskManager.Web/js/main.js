@@ -1,5 +1,4 @@
 ﻿(function($) {
-    
     //Notification handler
     abp.event.on('abp.notifications.received', function (userNotification) {
         abp.notifications.showUiNotifyForUserNotification(userNotification);
@@ -22,11 +21,12 @@
         return obj;
     }
 
-    //Configure blockUI
-    (function ($) {
-        if ($.blockUI) {
-            $.blockUI.defaults.baseZ = 2000;
-        }
-    })(jQuery);
+   
 
+})(jQuery);
+//Configure blockUI
+(function ($) {
+    if ($.blockUI) {
+        $.blockUI.defaults.baseZ = 2000;
+    }
 })(jQuery);
