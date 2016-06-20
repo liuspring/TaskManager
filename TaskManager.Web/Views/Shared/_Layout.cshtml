@@ -1,7 +1,4 @@
-﻿@using System.Threading
-@using System.Web.Optimization
-@using Abp.Timing
-@using Abp.Web.Mvc.Extensions
+﻿@using Abp.Web.Mvc.Extensions
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,15 +8,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <title>EventCloud</title>
+
     <link rel="shortcut icon" href="~/favicon.ico">
 
-    <title>TaskManager</title>
+    @Html.IncludeStyle("~/Content/themes/base/all.css")
+    @Html.IncludeStyle("~/Content/bootstrap-cosmo.min.css")
+    @Html.IncludeStyle("~/Content/font-awesome.min.css")
+    @Html.IncludeStyle("~/Content/toastr.min.css")
+    @Html.IncludeStyle("~/Content/flags/famfamfam-flags.css")
+    @Html.IncludeStyle("~/Scripts/sweetalert/sweet-alert.css")
 
-    @Styles.Render("~/Bundles/vendor/css")
-    @Styles.Render("~/Bundles/css")
+    @Html.IncludeStyle("~/Views/Shared/Layout.min.css")
 
-    <!-- View specific styles -->
-    @RenderSection("styles", required: false)
+    @RenderSection("Styles", false)
 
     <script type="text/javascript">
         //This is used to get the application's root path from javascript. It's useful if you're running application in a virtual directory under IIS.
@@ -28,37 +30,39 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-        <script src="@Url.Content("~/Scripts/others/html5shiv.js")"></script>
-        <script src="@Url.Content("~/Scripts/others/respond.min.js")"></script>
+        @Html.IncludeScript("~/Scripts/others/html5shiv.js")
+        @Html.IncludeScript("~/Scripts/others/respond.min.js")
     <![endif]-->
 
-    @Scripts.Render("~/Bundles/vendor/js/top")
 
-</head>
-<body>
-    @Html.Partial("_TopBar")
+    @Html.IncludeScript("~/Abp/Framework/scripts/utils/ie10fix.js")
+    @Html.IncludeScript("~/Scripts/modernizr-2.8.3.js")
 
-    <div class="container">
-        @RenderBody()
-    </div>
+    @Html.IncludeScript("~/Scripts/json2.min.js")
+    @Html.IncludeScript("~/Scripts/jquery-2.1.4.min.js")
+    @Html.IncludeScript("~/Scripts/jquery-ui-1.11.4.min.js")
+    @Html.IncludeScript("~/Scripts/bootstrap.min.js")
 
-    @Scripts.Render("~/Bundles/vendor/js/bottom")
-    @*@Scripts.Render("~/Bundles/js")*@
+    @Html.IncludeScript("~/Scripts/jquery.blockUI.js")
+    @Html.IncludeScript("~/Scripts/toastr.min.js")
+    @Html.IncludeScript("~/Scripts/others/spinjs/spin.js")
+    @Html.IncludeScript("~/Scripts/others/spinjs/jquery.spin.js")
+    @Html.IncludeScript("~/Scripts/sweetalert/sweet-alert.min.js")
 
-    <script>
-        //Localizing momentjs
-        moment.locale('@Thread.CurrentThread.CurrentUICulture.Name');
-    </script>
+    @Html.IncludeScript("~/Abp/Framework/scripts/abp.js")
+    @Html.IncludeScript("~/Abp/Framework/scripts/libs/abp.jquery.js")
+    @Html.IncludeScript("~/Abp/Framework/scripts/libs/abp.toastr.js")
+    @Html.IncludeScript("~/Abp/Framework/scripts/libs/abp.blockUI.js")
+    @Html.IncludeScript("~/Abp/Framework/scripts/libs/abp.spin.js")
+    @Html.IncludeScript("~/Abp/Framework/scripts/libs/abp.sweet-alert.js")
 
     <!-- Dynamic scripts of ABP system (They are created on runtime and can not be bundled) -->
-    <script src="~/api/AbpServiceProxies/GetAll?v=@(Clock.Now.Ticks)"></script>
-    <script src="~/AbpScripts/GetScripts?v=@(Clock.Now.Ticks)" type="text/javascript"></script>
+    @*<script src="~/api/AbpServiceProxies/GetAll"></script>
+    <script src="~/AbpScripts/GetScripts" type="text/javascript"></script>*@
 
-    <!-- SignalR scripts -->
-    <script src="~/signalr/hubs"></script>
-    @Html.IncludeScript("~/Abp/Framework/scripts/libs/abp.signalr.js")
-
-<!-- View specific scripts -->
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", false)
+</head>
+<body>
+    @RenderBody()
 </body>
 </html>

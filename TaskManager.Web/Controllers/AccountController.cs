@@ -24,6 +24,7 @@ using TaskManager.Web.Models.Account;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Drawing;
 
 namespace TaskManager.Web.Controllers
 {
@@ -125,7 +126,7 @@ namespace TaskManager.Web.Controllers
             {
                 returnUrl = returnUrl + returnUrlHash;
             }
-
+            Session["User"] = loginResult.User;
             return Json(new MvcAjaxResponse { TargetUrl = returnUrl });
         }
 

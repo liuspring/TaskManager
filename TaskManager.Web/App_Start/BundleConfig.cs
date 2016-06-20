@@ -9,6 +9,7 @@ namespace TaskManager.Web
             bundles.IgnoreList.Clear();
 
             //VENDOR RESOURCES
+            #region Old Bundle
 
             //~/Bundles/vendor/css
             bundles.Add(
@@ -44,7 +45,7 @@ namespace TaskManager.Web
                         "~/Scripts/moment-with-locales.min.js",
                         "~/Scripts/jquery.validate.min.js",
                         "~/Scripts/jquery.blockUI.js",
-                        //"~/Scripts/toastr.min.js",
+                        "~/Scripts/toastr.min.js",
                         "~/Scripts/sweetalert/sweet-alert.min.js",
                         "~/Scripts/others/spinjs/spin.js",
                         "~/Scripts/others/spinjs/jquery.spin.js",
@@ -73,6 +74,27 @@ namespace TaskManager.Web
                 new ScriptBundle("~/Bundles/js")
                     .Include("~/js/main.js")
                 );
+
+            #endregion
+
+            #region
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                        "~/Content/bootstrap.css"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+            "~/Scripts/modernizr-*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jquery-{version}.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                        "~/Scripts/bootstrap.js"));
+            #endregion
+
+
+
         }
     }
 }

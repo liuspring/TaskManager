@@ -14,38 +14,80 @@ namespace TaskManager.Web
     {
         public override void SetNavigation(INavigationProviderContext context)
         {
+            //context.Manager.MainMenu
+            //    .AddItem(
+            //        new MenuItemDefinition(
+            //            "Home",
+            //            L("HomePage"),
+            //            url: "",
+            //            icon: "fa fa-home",
+            //            requiresAuthentication: true
+            //            )
+            //    ).AddItem(
+            //        new MenuItemDefinition(
+            //            "Tenants",
+            //            L("Tenants"),
+            //            url: "Tenants",
+            //            icon: "fa fa-globe",
+            //            requiredPermissionName: PermissionNames.Pages_Tenants
+            //            )
+            //    ).AddItem(
+            //        new MenuItemDefinition(
+            //            "Users",
+            //            L("Users"),
+            //            url: "Users",
+            //            icon: "fa fa-users",
+            //            requiredPermissionName: PermissionNames.Pages_Users
+            //            )
+            //    ).AddItem(
+            //        new MenuItemDefinition(
+            //            "About",
+            //            L("About"),
+            //            url: "About",
+            //            icon: "fa fa-info"
+            //            )
+            //    );
+
             context.Manager.MainMenu
                 .AddItem(
                     new MenuItemDefinition(
-                        "Home",
-                        L("HomePage"),
+                        "任务管理",
+                        new LocalizableString("任务管理", TaskManagerConsts.LocalizationSourceName),
                         url: "",
-                        icon: "fa fa-home",
-                        requiresAuthentication: true
-                        )
+                        icon: "fa fa-calendar-check-o"
+                        ).AddItem(new MenuItemDefinition(
+                        "任务列表",
+                        new LocalizableString("任务列表", TaskManagerConsts.LocalizationSourceName),
+                        url: "/task",
+                        icon: "fa fa-circle-o"
+                        )).AddItem(new MenuItemDefinition(
+                        "命令列表",
+                        new LocalizableString("命令列表", TaskManagerConsts.LocalizationSourceName),
+                        url: "/command",
+                        icon: "fa fa-circle-o"
+                        )).AddItem(new MenuItemDefinition(
+                        "分类列表",
+                        new LocalizableString("分类列表", TaskManagerConsts.LocalizationSourceName),
+                        url: "/category",
+                        icon: "fa fa-circle-o"
+                        )).AddItem(new MenuItemDefinition(
+                        "节点管理",
+                        new LocalizableString("Events", TaskManagerConsts.LocalizationSourceName),
+                        url: "/node",
+                        icon: "fa fa-circle-o"
+                        ))
                 ).AddItem(
                     new MenuItemDefinition(
-                        "Tenants",
-                        L("Tenants"),
-                        url: "Tenants",
-                        icon: "fa fa-globe",
-                        requiredPermissionName: PermissionNames.Pages_Tenants
-                        )
-                ).AddItem(
-                    new MenuItemDefinition(
-                        "Users",
-                        L("Users"),
-                        url: "Users",
-                        icon: "fa fa-users",
-                        requiredPermissionName: PermissionNames.Pages_Users
-                        )
-                ).AddItem(
-                    new MenuItemDefinition(
-                        "About",
-                        L("About"),
-                        url: "About",
-                        icon: "fa fa-info"
-                        )
+                        "用户管理",
+                        new LocalizableString("用户管理", TaskManagerConsts.LocalizationSourceName),
+                        url: "",
+                        icon: "fa fa-users"
+                        ).AddItem(new MenuItemDefinition(
+                        "用户列表",
+                        new LocalizableString("用户列表", TaskManagerConsts.LocalizationSourceName),
+                        url: "/user/userlist",
+                        icon: "fa fa-circle-o"
+                        ))
                 );
         }
 
