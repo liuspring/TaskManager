@@ -11,7 +11,23 @@ namespace TaskManager.EntityFramework
     public class TaskManagerDbContext : AbpZeroDbContext<Tenant, Role, User>
     {
         //TODO: Define an IDbSet for your Entities...
+        public virtual IDbSet<Categories.Category> Categories { get; set; }
 
+        public virtual IDbSet<Nodes.Node> Nodes { get; set; }
+
+        public virtual IDbSet<Tasks.Task> Tasks { get; set; }
+
+        public virtual IDbSet<Commands.Command> Commands { get; set; }
+
+        public virtual IDbSet<TempDatas.TempData> TempDatas { get; set; }
+
+        public virtual IDbSet<Versions.VersionInfo> Versions { get; set; }
+
+        public virtual IDbSet<Performances.Performance> Performances { get; set; }
+
+        public virtual IDbSet<Errors.Error> Errors { get; set; }
+
+        public virtual IDbSet<Logs.Log> Logs { get; set; }
         /* NOTE: 
          *   Setting "Default" to base class helps us when working migration commands on Package Manager Console.
          *   But it may cause problems when working Migrate.exe of EF. If you will apply migrations on command line, do not

@@ -18,7 +18,7 @@ namespace TaskManager.Tasks
         public string TaskName { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Categorys.Category Category { get; set; }
+        public Categories.Category Category { get; set; }
 
         [Required]
         [Column("category_id")]

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Threading.Tasks;
 using TaskManager.Nodes;
+using TaskManager.Tasks;
 
 namespace TaskManager.Commands
 {

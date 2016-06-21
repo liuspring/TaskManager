@@ -691,14 +691,21 @@
     <Content Include="Scripts\AdminLTE\plugins\colorpicker\img\hue-horizontal.png" />
     <Content Include="Scripts\AdminLTE\plugins\colorpicker\img\hue.png" />
     <Content Include="Scripts\AdminLTE\plugins\colorpicker\img\saturation.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\dataTables.bootstrap.css" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\dataTables.bootstrap.css" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\dataTables.bootstrap.js" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\images\sort_asc.png" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\images\sort_both.png" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\images\sort_desc.png" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables1\jquery.dataTables.js" />
     <Content Include="Scripts\AdminLTE\plugins\datatables\dataTables.bootstrap.js" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_asc.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_asc_disabled.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_both.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_desc.png" />
-    <Content Include="Scripts\AdminLTE\plugins\datatables\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables\dataTables.js" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables\jquery.dataTables.css" />
     <Content Include="Scripts\AdminLTE\plugins\datatables\jquery.dataTables.js" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables\jquery.dataTables.min.css" />
+    <Content Include="Scripts\AdminLTE\plugins\datatables\jquery.dataTables.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\datepicker3.css" />
     <Content Include="Scripts\AdminLTE\plugins\datepicker\locales\bootstrap-datepicker.ar.js" />
@@ -941,6 +948,10 @@
     <Content Include="Scripts\AdminLTE\plugins\jQueryUI\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\AdminLTE\plugins\jQueryUI\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\jQuery\jQuery-2.1.3.min.js" />
+    <Content Include="Scripts\AdminLTE\plugins\jshow\form.validate.js" />
+    <Content Include="Scripts\AdminLTE\plugins\jshow\jquery.ui.draggable.js" />
+    <Content Include="Scripts\AdminLTE\plugins\jshow\jshow.utils.js" />
+    <Content Include="Scripts\AdminLTE\plugins\jshow\modal.manager.plugin1.0.js" />
     <Content Include="Scripts\AdminLTE\plugins\jvectormap\jquery-jvectormap-1.2.2.css" />
     <Content Include="Scripts\AdminLTE\plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
@@ -999,6 +1010,7 @@
       <DependentUpon>Login.css</DependentUpon>
     </Content>
     <Content Include="Views\Account\Register.js" />
+    <Content Include="Views\Categories\index.js" />
     <Content Include="Views\Tenants\Index.js" />
     <Content Include="Views\Users\Index.js" />
     <Content Include="Web.config">
@@ -1017,6 +1029,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminLteController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Results\ChallengeResult.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
@@ -1062,6 +1075,7 @@
     <Content Include="Views\AdminLte\Index.cshtml" />
     <Content Include="Views\AdminLte\Colors.cshtml" />
     <Content Include="Views\Account\LoginNew.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1091,7 +1105,11 @@
       <Name>TaskManager.WebApi</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Commands\" />
+    <Folder Include="Views\Nodes\" />
+    <Folder Include="Views\Tasks\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

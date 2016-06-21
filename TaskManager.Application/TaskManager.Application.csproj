@@ -96,11 +96,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Categorys\CategoyAppService.cs" />
-    <Compile Include="Categorys\Dto\CategoryListInput.cs" />
-    <Compile Include="Categorys\Dto\CategoryListOutput.cs" />
-    <Compile Include="Categorys\Dto\CreateCategoryInput.cs" />
-    <Compile Include="Categorys\ICategoyAppService.cs" />
+    <Compile Include="Categories\CategoryAppService.cs" />
+    <Compile Include="Categories\Dto\CategoryListInput.cs" />
+    <Compile Include="Categories\Dto\CategoryListOutput.cs" />
+    <Compile Include="Categories\Dto\CategoryOutput.cs" />
+    <Compile Include="Categories\Dto\CategoryInput.cs" />
+    <Compile Include="Categories\ICategoryAppService.cs" />
     <Compile Include="Commands\CommandAppService.cs" />
     <Compile Include="Commands\Dto\CommandListInput.cs" />
     <Compile Include="Commands\Dto\CommandListOutput.cs" />

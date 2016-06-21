@@ -21,7 +21,7 @@ namespace TaskManager.Web
                     .Include("~/Content/font-awesome.min.css", new CssRewriteUrlTransform())
                 );
 
-           
+
 
             //~/Bundles/vendor/js/top (These scripts should be included in the head of the page)
             bundles.Add(
@@ -45,11 +45,11 @@ namespace TaskManager.Web
 
                         "~/Scripts/moment-with-locales.min.js",
                         "~/Scripts/jquery.validate.min.js",
-                        "~/Scripts/jquery.blockUI.js",
-                //"~/Scripts/toastr.min.js",
-                        "~/Scripts/sweetalert/sweet-alert.min.js",
-                        "~/Scripts/others/spinjs/spin.js",
-                        "~/Scripts/others/spinjs/jquery.spin.js",
+                "~/Scripts/jquery.blockUI.js",
+                "~/Scripts/toastr.min.js",
+                "~/Scripts/sweetalert/sweet-alert.min.js",
+                "~/Scripts/others/spinjs/spin.js",
+                "~/Scripts/others/spinjs/jquery.spin.js",
 
                         "~/Abp/Framework/scripts/abp.js",
                         "~/Abp/Framework/scripts/libs/abp.jquery.js",
@@ -81,6 +81,20 @@ namespace TaskManager.Web
                    .Include("~/Content/bootstrap.min.css", new CssRewriteUrlTransform())
                  .Include("~/Content/font-awesome.min.css", new CssRewriteUrlTransform())
              );
+
+            //dataTables
+            bundles.Add(new StyleBundle("~/dataTables/css").Include(
+                      "~/Scripts/AdminLTE/plugins/datatables/dataTables.bootstrap.css"));
+
+            bundles.Add(new ScriptBundle("~/dataTables/js").Include(
+                    "~/Scripts/AdminLTE/plugins/datatables/jquery.dataTables.js",
+                    "~/Scripts/AdminLTE/plugins/dataTables/dataTables.bootstrap.js",
+                    "~/Scripts/AdminLTE/plugins/dataTables/dataTables.js"));
+
+            // jshow
+            bundles.Add(new ScriptBundle("~/plugins/jshow").Include(
+                      "~/Scripts/AdminLTE/plugins/jshow/modal.manager.plugin1.0.js",
+                      "~/Scripts/AdminLTE/plugins/jshow/jshow.utils.js"));
         }
     }
 }

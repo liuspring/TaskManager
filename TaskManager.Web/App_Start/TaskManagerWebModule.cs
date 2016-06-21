@@ -7,7 +7,7 @@ using Abp.Hangfire.Configuration;
 using Abp.Zero.Configuration;
 using Abp.Modules;
 using Abp.Web.Mvc;
-using Abp.Web.SignalR;
+//using Abp.Web.SignalR;
 using TaskManager.Api;
 using Hangfire;
 
@@ -17,7 +17,7 @@ namespace TaskManager.Web
         typeof(TaskManagerDataModule),
         typeof(TaskManagerApplicationModule),
         typeof(TaskManagerWebApiModule),
-        typeof(AbpWebSignalRModule),
+        //typeof(AbpWebSignalRModule),
         typeof(AbpHangfireModule),
         typeof(AbpWebMvcModule))]
     public class TaskManagerWebModule : AbpModule

@@ -46,7 +46,7 @@ namespace TaskManager.Web
                 app.UseGoogleAuthentication(CreateGoogleAuthOptions());
             }
 
-            app.MapSignalR();
+            //app.MapSignalR();
         }
 
         private static FacebookAuthenticationOptions CreateFacebookAuthOptions()

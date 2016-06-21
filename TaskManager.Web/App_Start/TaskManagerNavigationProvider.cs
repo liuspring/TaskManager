@@ -58,22 +58,22 @@ namespace TaskManager.Web
                         ).AddItem(new MenuItemDefinition(
                         "任务列表",
                         new LocalizableString("任务列表", TaskManagerConsts.LocalizationSourceName),
-                        url: "/task",
+                        url: "/tasks/index",
                         icon: "fa fa-circle-o"
                         )).AddItem(new MenuItemDefinition(
                         "命令列表",
                         new LocalizableString("命令列表", TaskManagerConsts.LocalizationSourceName),
-                        url: "/command",
+                        url: "/commands/index",
                         icon: "fa fa-circle-o"
                         )).AddItem(new MenuItemDefinition(
                         "分类列表",
                         new LocalizableString("分类列表", TaskManagerConsts.LocalizationSourceName),
-                        url: "/category",
+                        url: "/categories/index",
                         icon: "fa fa-circle-o"
                         )).AddItem(new MenuItemDefinition(
                         "节点管理",
                         new LocalizableString("Events", TaskManagerConsts.LocalizationSourceName),
-                        url: "/node",
+                        url: "/nodes/index",
                         icon: "fa fa-circle-o"
                         ))
                 ).AddItem(
@@ -85,7 +85,7 @@ namespace TaskManager.Web
                         ).AddItem(new MenuItemDefinition(
                         "用户列表",
                         new LocalizableString("用户列表", TaskManagerConsts.LocalizationSourceName),
-                        url: "/user/userlist",
+                        url: "/users/index",
                         icon: "fa fa-circle-o"
                         ))
                 );

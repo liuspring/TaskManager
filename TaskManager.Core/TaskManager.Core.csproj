@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Categorys\Category.cs" />
+    <Compile Include="Categories\Category.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Errors\Error.cs" />
     <Compile Include="Logs\Log.cs" />

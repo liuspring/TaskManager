@@ -55,33 +55,4 @@
     </section>
     <!-- /.sidebar -->
 </aside>
-<script type="text/javascript">
-    var controller = "@ViewContext.RouteData.Values["controller"]";
-    var menus = abp.nav.menus.MainMenu.items;
-    var $menu = $("ul.sidebar-menu");
-    $.each(menus, function (i, firstMenu) {
-        var content = '<li class="treeview">' +
-            '<a href="#">' +
-            '<i class="' + firstMenu.icon + '"></i> <span>' + firstMenu.name + '</span><i class="fa fa-angle-left pull-right"></i>' +
-            '</a>';
-        if (firstMenu.items.length > 0) {
-            content += '<ul class="treeview-menu">';
-            $.each(firstMenu.items, function (j, secondMenu) {
-                var arr = secondMenu.url.split("/");
-                content += '<li><a href="' + secondMenu.url + '"><i class="' + secondMenu.icon + '"></i>' + secondMenu.name + '</a></li>';
-            })
-            content += "</ul>";
-        }
-        content += "</li>";
-        $menu.append(content);
-    });
-    $("ul.treeview-menu a").each(function () {
-        var $this = $(this);
-        var href = $this.attr("href");
-        var arr = href.split("/");
-        if (arr[1] == controller) {
-            $this.parent().addClass("active");
-            $this.parent().parent().parent().addClass("active");
-        }
-    })
-</script>
+

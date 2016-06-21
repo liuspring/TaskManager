@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Abp.Application.Services.Dto;
+﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
-using TaskManager.Categorys;
 
 namespace TaskManager.Tasks.Dto
 {
