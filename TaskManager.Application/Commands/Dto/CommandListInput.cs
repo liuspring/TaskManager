@@ -2,14 +2,17 @@
 
 namespace TaskManager.Commands.Dto
 {
-    public class CommandListInput:DataTablesRequest
+    public class CommandListInput : DataTablesRequest
     {
-        public CommandListInput(HttpRequestBase request) : base(request)
+        public CommandListInput(HttpRequestBase request)
+            : base(request)
         {
         }
 
-        public CommandListInput(HttpRequest httpRequest) : base(httpRequest)
+        public CommandListInput(HttpRequest httpRequest)
+            : base(httpRequest)
         {
         }
+        public string CommandName { get; set; }
     }
 }

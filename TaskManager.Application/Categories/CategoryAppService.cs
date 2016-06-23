@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.AutoMapper;
 using Abp.Domain.Repositories;
@@ -41,10 +40,8 @@ namespace TaskManager.Categories
 
         public List<CategoryListOutput> GetList(CategoryListInput input)
         {
-            var categorys = _categoryRepository.GetAll();
-            if (!string.IsNullOrEmpty(input.CategoryName))
-                categorys = categorys.Where(a => a.CategoryName.Contains(input.CategoryName));
-            categorys = categorys
+            var categorys = _categoryRepository.GetAll()
+            .Where(a => a.CategoryName.Contains(input.CategoryName.Trim()))
                 .OrderBy(a => a.Id)
                 .Skip(input.iDisplayStart)
                 .Take(input.iDisplayLength);
@@ -53,7 +50,7 @@ namespace TaskManager.Categories
 
         public int GetListTotal(CategoryListInput input)
         {
-            return _categoryRepository.GetAllList().Count;
+            return _categoryRepository.GetAll().Count(a => a.CategoryName.Contains(input.CategoryName.Trim()));
         }
 
         public List<Category> GetAllList()

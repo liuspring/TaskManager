@@ -105,13 +105,15 @@
     <Compile Include="Commands\CommandAppService.cs" />
     <Compile Include="Commands\Dto\CommandListInput.cs" />
     <Compile Include="Commands\Dto\CommandListOutput.cs" />
-    <Compile Include="Commands\Dto\CreateCommandInput.cs" />
+    <Compile Include="Commands\Dto\CommandInput.cs" />
+    <Compile Include="Commands\Dto\CommandOutput.cs" />
     <Compile Include="Commands\ICommandAppService.cs" />
     <Compile Include="DataTablesRequest.cs" />
     <Compile Include="DataTablesResponse.cs" />
-    <Compile Include="Nodes\Dto\CreateNodeInput.cs" />
+    <Compile Include="Nodes\Dto\NodeInput.cs" />
     <Compile Include="Nodes\Dto\NodeListInput.cs" />
     <Compile Include="Nodes\Dto\NodeListOutput.cs" />
+    <Compile Include="Nodes\Dto\NodeOutput.cs" />
     <Compile Include="Nodes\INodeAppService.cs" />
     <Compile Include="Nodes\NodeAppService.cs" />
     <Compile Include="TaskManagerApplicationModule.cs" />

@@ -5,10 +5,12 @@ using Abp.AutoMapper;
 namespace TaskManager.Nodes.Dto
 {
     [AutoMapFrom(typeof(Node))]
-    public class CreateNodeInput : IInputDto
+    public class NodeInput : IInputDto
     {
         public const int MaxNodeNameLength = 50;
         public const int MaxNodeIpLength = 50;
+
+        public int Id { get; set; }
 
         [Required]
         [StringLength(MaxNodeNameLength)]

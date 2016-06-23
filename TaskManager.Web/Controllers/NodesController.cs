@@ -25,10 +25,10 @@ namespace TaskManager.Web.Controllers
         }
 
         /// <summary>
-        /// 获得分类列表
+        /// 获得节点列表
         /// </summary>
         /// <returns></returns>
-        public JsonResult AjaxCategoryList()
+        public JsonResult AjaxNodeList()
         {
             var input = new NodeListInput(Request)
             {

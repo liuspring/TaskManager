@@ -4,17 +4,18 @@ using Abp.AutoMapper;
 namespace TaskManager.Commands.Dto
 {
     [AutoMapFrom(typeof(Command))]
-    public class CreateCommandInput
+    public class CommandInput
     {
+        public int Id { get; set; }
         [Required]
-        public string CmdName { get; set; }
+        public string CommandName { get; set; }
 
         [Required]
-        public string Cmd { get; set; }
+        public string CommandJson { get; set; }
 
 
         [Required]
-        public byte CmdState { get; set; }
+        public byte CommandState { get; set; }
 
         [Required]
 
@@ -24,9 +25,9 @@ namespace TaskManager.Commands.Dto
 
         public int TaskId { get; set; }
 
-        public CreateCommandInput()
+        public CommandInput()
         {
-            CmdState = 0;
+            CommandState = 0;
         }
 
     }

@@ -12,11 +12,11 @@ namespace TaskManager.Commands.Dto
     {
         public int Id { get; set; }
 
-        public string CmdName { get; set; }
+        public string CommandName { get; set; }
 
-        public string Cmd { get; set; }
+        public string CommandJson { get; set; }
 
-        public byte CmdState { get; set; }
+        public byte CommandState { get; set; }
 
         public int NodeId { get; set; }
 
