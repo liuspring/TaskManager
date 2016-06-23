@@ -10,20 +10,14 @@ namespace TaskManager.Errors
     [Description("错误日志表")]
     public class Error : BaseEntity
     {
-        [Column("id")]
-        [Description("自增主键")]
-        public override int Id { get; set; }
 
-        [ForeignKey("NodeId")]
-        public Node Node { get; set; }
+
 
         [Required]
         [Column("node_id")]
         [Description("节点ID")]
         public int NodeId { get; set; }
 
-        [ForeignKey("TaskId")]
-        public Task Task { get; set; }
 
         [Column("task_id")]
         [Description("任务ID")]

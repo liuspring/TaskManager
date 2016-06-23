@@ -10,16 +10,16 @@ namespace TaskManager.Logs
     [Description("一般日志表")]
     public class Log : BaseEntity
     {
-        [ForeignKey("NodeId")]
-        public Node Node { get; set; }
+        //[ForeignKey("NodeId")]
+        //public Node Node { get; set; }
 
         [Required]
         [Column("node_id")]
         [Description("节点ID")]
         public int NodeId { get; set; }
 
-        [ForeignKey("TaskId")]
-        public Task Task { get; set; }
+        //[ForeignKey("TaskId")]
+        //public Task Task { get; set; }
 
         [Column("task_id")]
         [Description("任务ID")]

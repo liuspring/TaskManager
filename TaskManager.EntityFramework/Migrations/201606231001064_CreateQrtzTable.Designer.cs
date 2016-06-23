@@ -13,7 +13,7 @@ namespace TaskManager.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201606210558537_CreateQrtzTable"; }
+            get { return "201606231001064_CreateQrtzTable"; }
         }
         
         string IMigrationMetadata.Source

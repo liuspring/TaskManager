@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common;
-using TaskManager.Logs;
+using TaskManager.Node.Dal;
+using TaskManager.Node.Model;
+using XXF.Extensions;
+using XXF.ProjectTool;
 
 namespace TaskManager.Node.TaskManager.SystemRuntime
 {
@@ -18,7 +17,8 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
         /// 任务dll实例引用
         /// </summary>
         protected BaseDllTask DllTask = null;
-        protected string localtempdatafilename = "localtempdata.json.txt";
+
+        protected string Localtempdatafilename = "localtempdata.json.txt";
 
         public TaskSystemRuntimeOperator(BaseDllTask dlltask)
         {
@@ -27,13 +27,13 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
 
         public void SaveLocalTempData(object obj)
         {
-            string filename = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + localtempdatafilename;
+            string filename = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + Localtempdatafilename;
             var json = JsonHelper.Serialize(obj);
             System.IO.File.WriteAllText(filename, json);
         }
         public T GetLocalTempData<T>() where T : class
         {
-            string filename = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + localtempdatafilename;
+            string filename = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + Localtempdatafilename;
             if (!System.IO.File.Exists(filename))
                 return null;
             string content = System.IO.File.ReadAllText(filename);
@@ -42,84 +42,90 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
         }
         public void SaveDataBaseTempData(object obj)
         {
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_tempdata_dal taskdal = new dal.tb_tempdata_dal();
-            //    taskdal.SaveTempData(c, DllTask.SystemRuntimeInfo.TaskModel.id, new JsonHelper().Serializer(obj));
-            //});
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var tempDataDal = new TempDataDal();
+                tempDataDal.SaveTempData(c, DllTask.SystemRuntimeInfo.TaskModel.Id, JsonHelper.Serialize(obj));
+            });
         }
         public T GetDataBaseTempData<T>() where T : class
         {
-            //string json = null;
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_tempdata_dal taskdal = new dal.tb_tempdata_dal();
-            //    json = taskdal.GetTempData(c, DllTask.SystemRuntimeInfo.TaskModel.id);
-            //});
-            //if (string.IsNullOrEmpty(json))
-            //{
-            //    return null;
-            //}
-            //var obj = new JsonHelper().Deserialize<T>(json);
-            //return obj;
-            return null;
+            string json = null;
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var tempDataDal = new TempDataDal();
+
+                json = tempDataDal.GetTempData(c, DllTask.SystemRuntimeInfo.TaskModel.Id);
+            });
+            if (string.IsNullOrEmpty(json))
+            {
+                return null;
+            }
+            var obj = JsonHelper.DeSerialize<T>(json);
+            return obj;
         }
 
         public void UpdateLastStartTime(DateTime time)
         {
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_task_dal taskdal = new dal.tb_task_dal();
-            //    taskdal.UpdateLastStartTime(c, DllTask.SystemRuntimeInfo.TaskModel.id, time);
-            //});
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var taskDal = new TaskDal();
+                taskDal.UpdateLastStartTime(c, DllTask.SystemRuntimeInfo.TaskModel.Id, time);
+            });
         }
 
         public void UpdateLastEndTime(DateTime time)
         {
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_task_dal taskdal = new dal.tb_task_dal();
-            //    taskdal.UpdateLastEndTime(c, DllTask.SystemRuntimeInfo.TaskModel.id, time);
-            //});
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var taskDal = new TaskDal();
+                taskDal.UpdateLastEndTime(c, DllTask.SystemRuntimeInfo.TaskModel.Id, time);
+            });
         }
 
         public void UpdateTaskError(DateTime time)
         {
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_task_dal taskdal = new dal.tb_task_dal();
-            //    taskdal.UpdateTaskError(c, DllTask.SystemRuntimeInfo.TaskModel.id, time);
-            //});
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var taskDal = new TaskDal();
+                taskDal.UpdateTaskError(c, DllTask.SystemRuntimeInfo.TaskModel.Id, time);
+            });
         }
 
         public void UpdateTaskSuccess()
         {
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_task_dal taskdal = new dal.tb_task_dal();
-            //    taskdal.UpdateTaskSuccess(c, DllTask.SystemRuntimeInfo.TaskModel.id);
-            //});
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var taskDal = new TaskDal();
+                taskDal.UpdateTaskSuccess(c, DllTask.SystemRuntimeInfo.TaskModel.Id);
+            });
         }
 
-        public void AddLog(Log model)
+        public void AddLog(LogModel model)
         {
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_log_dal logdal = new dal.tb_log_dal();
-            //    model.msg = model.msg.SubString2(1000);
-            //    logdal.Add(c, model);
-            //});
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var logDal = new LogDal();
+                model.Msg = model.Msg.SubString2(1000);
+                logDal.Add(c, model);
+            });
         }
 
-        public void AddError(Errors.Error model)
+        public void AddError(ErrorModel model)
         {
-            //AddLog(new tb_log_model { logcreatetime = model.errorcreatetime, logtype = model.errortype, msg = model.msg, taskid = model.taskid });
-            //SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            //{
-            //    dal.tb_error_dal errordal = new dal.tb_error_dal();
-            //    model.msg = model.msg.SubString2(1000);
-            //    errordal.Add(c, model);
-            //});
+            AddLog(new LogModel()
+            {
+                CreationTime = model.CreationTime,
+                LogType = model.ErrorType,
+                Msg = model.Msg,
+                TaskId = model.TaskId
+            });
+            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            {
+                var errorDal = new ErrorDal();
+                model.Msg = model.Msg.SubString2(1000);
+                errorDal.Add(c, model);
+            });
         }
     }
 }

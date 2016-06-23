@@ -11,5 +11,9 @@ namespace TaskManager.Nodes.Dto
         public NodeListInput(HttpRequest httpRequest): base(httpRequest)
         {
         }
+
+        public string NodeName { get; set; }
+
+
     }
 }

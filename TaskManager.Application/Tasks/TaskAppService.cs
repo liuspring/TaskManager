@@ -49,5 +49,15 @@ namespace TaskManager.Tasks
         {
             return _taskRepository.GetAllList();
         }
+
+        public Task GetTask(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void UpdateTaskState(int taskId, int state)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -105,18 +105,6 @@ namespace TaskManager.Tasks
         public virtual ICollection<Commands.Command> Commands { get; protected set; }
 
         /// <summary>
-        /// 错误日志集合
-        /// </summary>
-        [ForeignKey("TaskId")]
-        public virtual ICollection<Errors.Error> Errors { get; protected set; }
-
-        /// <summary>
-        /// 一般日志集合
-        /// </summary>
-        [ForeignKey("TaskId")]
-        public virtual ICollection<Logs.Log> Logs { get; protected set; }
-
-        /// <summary>
         /// 节点和任务性能记录表集合
         /// </summary>
         [ForeignKey("TaskId")]

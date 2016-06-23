@@ -154,6 +154,10 @@
       <HintPath>..\packages\NVelocity.1.0.3\lib\NVelocity.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharpCompress, Version=0.11.6.0, Culture=neutral, PublicKeyToken=beaf6f427e128133, processorArchitecture=MSIL">
+      <HintPath>..\packages\sharpcompress.0.11.6\lib\net40\SharpCompress.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -180,6 +184,7 @@
     <Compile Include="Captcha.cs" />
     <Compile Include="ClassHelper.cs" />
     <Compile Include="CommonHelper.cs" />
+    <Compile Include="CompressHelper.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="CreateQRCode.cs" />
     <Compile Include="DataCache.cs" />
@@ -198,6 +203,7 @@
     <Compile Include="HttpWebAsk.cs" />
     <Compile Include="ImgHelper.cs" />
     <Compile Include="IntExtend.cs" />
+    <Compile Include="IOHelper.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="MailSender.cs" />
     <Compile Include="MessageQueueMgr.cs" />

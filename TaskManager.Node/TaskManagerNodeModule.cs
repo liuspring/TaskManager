@@ -1,7 +1,13 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using Abp;
 using Abp.Modules;
-using Castle.MicroKernel.Registration;
-using TaskManager.Categories;
+using TaskManager.EntityFramework;
 
 namespace TaskManager.Node
 {
@@ -10,15 +16,21 @@ namespace TaskManager.Node
     typeof(TaskManagerApplicationModule))]
     public class TaskManagerNodeModule : AbpModule
     {
-
-        public override void PostInitialize()
+        public override void PreInitialize()
         {
-            base.PostInitialize();
+            Database.SetInitializer(new CreateDatabaseIfNotExists<TaskManagerDbContext>());
+            Configuration.DefaultNameOrConnectionString = "Default";
         }
 
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+        }
+
+        public void InitModule()
+        {
+            var bootstrapper=new AbpBootstrapper();
+            bootstrapper.IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
         }
     }
 }

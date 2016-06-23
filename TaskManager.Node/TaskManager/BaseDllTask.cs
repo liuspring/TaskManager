@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManager.Node.Model;
 using TaskManager.Node.TaskManager.OpenOperator;
 using TaskManager.Node.TaskManager.SystemRuntime;
 
@@ -61,34 +58,34 @@ namespace TaskManager.Node.TaskManager
         /// </summary>
         public void TryRun()
         {
-            //try
-            //{
-            //    IsTesting = false;
-            //    SystemRuntimeOperator.UpdateLastStartTime(DateTime.Now);
-            //    Run();
-            //    SystemRuntimeOperator.UpdateLastEndTime(DateTime.Now);
-            //    SystemRuntimeOperator.UpdateTaskSuccess();
-            //    SystemRuntimeOperator.AddLog(new model.tb_log_model
-            //    {
-            //        msg = "任务【" + SystemRuntimeInfo.TaskModel.taskname + "】执行完毕",
-            //        taskid = SystemRuntimeInfo.TaskModel.id,
-            //        logtype = (byte)EnumTaskLogType.SystemLog,
-            //        logcreatetime = DateTime.Now,
-            //        nodeid = SystemRuntimeInfo.TaskModel.nodeid
-            //    });
-            //}
-            //catch (Exception exp)
-            //{
-            //    SystemRuntimeOperator.UpdateTaskError(DateTime.Now);
-            //    SystemRuntimeOperator.AddError(new model.tb_error_model
-            //    {
-            //        msg = ("错误:" + exp.Message + " 堆栈:" + exp.StackTrace),
-            //        taskid = SystemRuntimeInfo.TaskModel.id,
-            //        errortype = (byte)EnumTaskLogType.SystemError,
-            //        errorcreatetime = DateTime.Now,
-            //        nodeid = SystemRuntimeInfo.TaskModel.nodeid
-            //    });
-            //}
+            try
+            {
+                IsTesting = false;
+                SystemRuntimeOperator.UpdateLastStartTime(DateTime.Now);
+                Run();
+                SystemRuntimeOperator.UpdateLastEndTime(DateTime.Now);
+                SystemRuntimeOperator.UpdateTaskSuccess();
+                SystemRuntimeOperator.AddLog(new LogModel
+                {
+                    Msg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】执行完毕",
+                    TaskId = SystemRuntimeInfo.TaskModel.Id,
+                    LogType = (byte)EnumTaskLogType.SystemLog,
+                    CreationTime = DateTime.Now,
+                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
+                });
+            }
+            catch (Exception exp)
+            {
+                SystemRuntimeOperator.UpdateTaskError(DateTime.Now);
+                SystemRuntimeOperator.AddError(new ErrorModel
+                {
+                    Msg = ("错误:" + exp.Message + " 堆栈:" + exp.StackTrace),
+                    TaskId = SystemRuntimeInfo.TaskModel.Id,
+                    ErrorType = (byte)EnumTaskLogType.SystemError,
+                    CreationTime = DateTime.Now,
+                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
+                });
+            }
         }
 
         /// <summary>
@@ -110,27 +107,27 @@ namespace TaskManager.Node.TaskManager
         /// </summary>
         public virtual void Dispose()
         {
-            //if (SafeDisposeOperator != null)
-            //{
-            //    SafeDisposeOperator.DisposedState = TaskDisposedState.Disposing;
-            //    SystemRuntimeOperator.AddLog(new model.tb_log_model
-            //    {
-            //        msg = "任务【" + SystemRuntimeInfo.TaskModel.taskname + "】已设置资源释放状态(Disposing),并等待任务安全终止信号",
-            //        taskid = SystemRuntimeInfo.TaskModel.id,
-            //        logtype = (byte)EnumTaskLogType.SystemLog,
-            //        logcreatetime = DateTime.Now,
-            //        nodeid = SystemRuntimeInfo.TaskModel.nodeid
-            //    });
-            //    SafeDisposeOperator.WaitDisposeFinished();
-            //    SystemRuntimeOperator.AddLog(new model.tb_log_model
-            //    {
-            //        msg = "任务【" + SystemRuntimeInfo.TaskModel.taskname + "】已安全终止结束",
-            //        taskid = SystemRuntimeInfo.TaskModel.id,
-            //        logtype = (byte)EnumTaskLogType.SystemLog,
-            //        logcreatetime = DateTime.Now,
-            //        nodeid = SystemRuntimeInfo.TaskModel.nodeid
-            //    });
-            //}
+            if (SafeDisposeOperator != null)
+            {
+                SafeDisposeOperator.DisposedState = TaskDisposedState.Disposing;
+                SystemRuntimeOperator.AddLog(new LogModel
+                {
+                    Msg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已设置资源释放状态(Disposing),并等待任务安全终止信号",
+                    TaskId = SystemRuntimeInfo.TaskModel.Id,
+                    LogType = (byte)EnumTaskLogType.SystemLog,
+                    CreationTime = DateTime.Now,
+                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
+                });
+                SafeDisposeOperator.WaitDisposeFinished();
+                SystemRuntimeOperator.AddLog(new LogModel
+                {
+                    Msg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已安全终止结束",
+                    TaskId = SystemRuntimeInfo.TaskModel.Id,
+                    LogType = (byte)EnumTaskLogType.SystemLog,
+                    CreationTime = DateTime.Now,
+                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
+                });
+            }
         }
     }
 }

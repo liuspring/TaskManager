@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using TaskManager.Categories;
 using TaskManager.Node.Tools;
 
 namespace TaskManager.Node
@@ -8,7 +6,7 @@ namespace TaskManager.Node
     /// <summary>
     /// 命令消息循环处理器
     /// </summary>
-    public class CommandQueueProcessor 
+    public class CommandQueueProcessor
     {
         private static System.Threading.Thread thread;
         /// <summary>
@@ -29,7 +27,9 @@ namespace TaskManager.Node
         /// 运行处理循环
         /// </summary>
         public static void Run()
-        { }
+        {
+            
+        }
 
         static void Running()
         {
@@ -46,11 +46,11 @@ namespace TaskManager.Node
             try
             {
                 LogHelper.AddNodeLog("当前节点启动成功,准备恢复已经开启的任务...");
-                var taskids = new List<int>();
+                //var taskids = new List<int>();
                 //SqlHelper.ExcuteSql(GlobalConfig.TaskDataBaseConnectString, (c) =>
                 //{
-                //    tb_task_dal taskdal = new tb_task_dal();
-                //    taskids = taskdal.GetTaskIDsByState(c, (int)EnumTaskState.Running, GlobalConfig.NodeID);
+                //    var taskdal = new TaskDal();
+                //    taskids = taskdal.GetTaskIDsByState(c, (int)EnumTaskState.Running, GlobalConfig.NodeId);
                 //});
                 //foreach (var taskid in taskids)
                 //{
@@ -72,11 +72,11 @@ namespace TaskManager.Node
                 //        LogHelper.AddTaskError(string.Format("恢复已经开启的任务{0}失败", taskid), taskid, exp);
                 //    }
                 //}
-                LogHelper.AddNodeLog(string.Format("恢复已经开启的任务完毕，共{0}条任务重启", taskids.Count));
+                //LogHelper.AddNodeLog(string.Format("恢复已经开启的任务完毕，共{0}条任务重启", taskids.Count));
             }
             catch (Exception exp)
             {
-                LogHelper.AddNodeError("恢复已经开启的任务失败", exp);
+                //LogHelper.AddNodeError("恢复已经开启的任务失败", exp);
             }
         }
 
@@ -85,7 +85,7 @@ namespace TaskManager.Node
         /// </summary>
         static void RuningCommandLoop()
         {
-            LogHelper.AddNodeLog("准备接受命令并运行消息循环...");
+            //LogHelper.AddNodeLog("准备接受命令并运行消息循环...");
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);
@@ -136,7 +136,7 @@ namespace TaskManager.Node
                 }
                 catch (Exception exp)
                 {
-                    LogHelper.AddNodeError("系统级不可恢复严重错误", exp);
+                    //LogHelper.AddNodeError("系统级不可恢复严重错误", exp);
                 }
                 System.Threading.Thread.Sleep(3000);
             }

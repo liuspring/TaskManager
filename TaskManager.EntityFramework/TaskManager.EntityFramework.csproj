@@ -121,9 +121,9 @@
     <Compile Include="Migrations\201606200908385_InitialCreate.Designer.cs">
       <DependentUpon>201606200908385_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606210558537_CreateQrtzTable.cs" />
-    <Compile Include="Migrations\201606210558537_CreateQrtzTable.Designer.cs">
-      <DependentUpon>201606210558537_CreateQrtzTable.cs</DependentUpon>
+    <Compile Include="Migrations\201606231001064_CreateQrtzTable.cs" />
+    <Compile Include="Migrations\201606231001064_CreateQrtzTable.Designer.cs">
+      <DependentUpon>201606231001064_CreateQrtzTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AbpZeroDbMigrator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -151,8 +151,8 @@
     <EmbeddedResource Include="Migrations\201606200908385_InitialCreate.resx">
       <DependentUpon>201606200908385_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606210558537_CreateQrtzTable.resx">
-      <DependentUpon>201606210558537_CreateQrtzTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606231001064_CreateQrtzTable.resx">
+      <DependentUpon>201606231001064_CreateQrtzTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

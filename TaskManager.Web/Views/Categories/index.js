@@ -12,7 +12,7 @@
             }
             var category = $form.serializeFormToObject();
             abp.ui.setBusy($modal);
-            if (category.id == 0) {
+            if (category.Id == "") {
                 categoryService.create(category).done(function() {
                     grid.submitFilter();
                     $modal.modal("hide");

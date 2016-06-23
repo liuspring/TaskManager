@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Abp.Application.Services;
 using TaskManager.Tasks.Dto;
 
 namespace TaskManager.Tasks
 {
-    public interface ITaskAppService
+    public interface ITaskAppService : IApplicationService
     {
         int Create(CreateTaskInput input);
 
@@ -12,5 +13,9 @@ namespace TaskManager.Tasks
         int GetListTotal(TaskListInput input);
 
         List<Task> GetAllList();
+
+        Task GetTask(int id);
+
+        void UpdateTaskState(int taskId, int state);
     }
 }

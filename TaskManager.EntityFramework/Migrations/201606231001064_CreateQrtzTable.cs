@@ -80,14 +80,15 @@ namespace TaskManager.Migrations
                 .PrimaryKey(t => t.id);
             
             CreateTable(
-                "dbo.qrtz_error",
+                "dbo.qrtz_performance",
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
                         node_id = c.Int(nullable: false),
                         task_id = c.Int(nullable: false),
-                        mgs = c.String(nullable: false, maxLength: 4000, storeType: "nvarchar"),
-                        error_type = c.Byte(nullable: false),
+                        cpu = c.Single(nullable: false),
+                        memory = c.Single(nullable: false),
+                        install_dir_size = c.Single(nullable: false),
                         is_deleted = c.Boolean(nullable: false),
                         deleter_user_id = c.Long(),
                         deletion_time = c.DateTime(precision: 0),
@@ -98,7 +99,7 @@ namespace TaskManager.Migrations
                     },
                 annotations: new Dictionary<string, object>
                 {
-                    { "DynamicFilter_Error_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                    { "DynamicFilter_Performance_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 })
                 .PrimaryKey(t => t.id)
                 .ForeignKey("dbo.qrtz_node", t => t.node_id, cascadeDelete: true)
@@ -144,61 +145,6 @@ namespace TaskManager.Migrations
                 .ForeignKey("dbo.qrtz_node", t => t.node_id, cascadeDelete: true)
                 .Index(t => t.category_id)
                 .Index(t => t.node_id);
-            
-            CreateTable(
-                "dbo.qrtz_log",
-                c => new
-                    {
-                        id = c.Int(nullable: false, identity: true),
-                        node_id = c.Int(nullable: false),
-                        task_id = c.Int(nullable: false),
-                        mgs = c.String(nullable: false, maxLength: 4000, storeType: "nvarchar"),
-                        log_type = c.Byte(nullable: false),
-                        is_deleted = c.Boolean(nullable: false),
-                        deleter_user_id = c.Long(),
-                        deletion_time = c.DateTime(precision: 0),
-                        last_modification_time = c.DateTime(precision: 0),
-                        last_modifier_user_id = c.Long(),
-                        creation_time = c.DateTime(nullable: false, precision: 0),
-                        creator_user_id = c.Long(),
-                    },
-                annotations: new Dictionary<string, object>
-                {
-                    { "DynamicFilter_Log_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
-                })
-                .PrimaryKey(t => t.id)
-                .ForeignKey("dbo.qrtz_node", t => t.node_id, cascadeDelete: true)
-                .ForeignKey("dbo.qrtz_task", t => t.task_id, cascadeDelete: true)
-                .Index(t => t.node_id)
-                .Index(t => t.task_id);
-            
-            CreateTable(
-                "dbo.qrtz_performance",
-                c => new
-                    {
-                        id = c.Int(nullable: false, identity: true),
-                        node_id = c.Int(nullable: false),
-                        task_id = c.Int(nullable: false),
-                        cpu = c.Single(nullable: false),
-                        memory = c.Single(nullable: false),
-                        install_dir_size = c.Single(nullable: false),
-                        is_deleted = c.Boolean(nullable: false),
-                        deleter_user_id = c.Long(),
-                        deletion_time = c.DateTime(precision: 0),
-                        last_modification_time = c.DateTime(precision: 0),
-                        last_modifier_user_id = c.Long(),
-                        creation_time = c.DateTime(nullable: false, precision: 0),
-                        creator_user_id = c.Long(),
-                    },
-                annotations: new Dictionary<string, object>
-                {
-                    { "DynamicFilter_Performance_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
-                })
-                .PrimaryKey(t => t.id)
-                .ForeignKey("dbo.qrtz_node", t => t.node_id, cascadeDelete: true)
-                .ForeignKey("dbo.qrtz_task", t => t.task_id, cascadeDelete: true)
-                .Index(t => t.node_id)
-                .Index(t => t.task_id);
             
             CreateTable(
                 "dbo.qrtz_temp_data",
@@ -249,6 +195,52 @@ namespace TaskManager.Migrations
                 .ForeignKey("dbo.qrtz_task", t => t.task_id, cascadeDelete: true)
                 .Index(t => t.task_id);
             
+            CreateTable(
+                "dbo.qrtz_error",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        node_id = c.Int(nullable: false),
+                        task_id = c.Int(nullable: false),
+                        mgs = c.String(nullable: false, maxLength: 4000, storeType: "nvarchar"),
+                        error_type = c.Byte(nullable: false),
+                        is_deleted = c.Boolean(nullable: false),
+                        deleter_user_id = c.Long(),
+                        deletion_time = c.DateTime(precision: 0),
+                        last_modification_time = c.DateTime(precision: 0),
+                        last_modifier_user_id = c.Long(),
+                        creation_time = c.DateTime(nullable: false, precision: 0),
+                        creator_user_id = c.Long(),
+                    },
+                annotations: new Dictionary<string, object>
+                {
+                    { "DynamicFilter_Error_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                })
+                .PrimaryKey(t => t.id);
+            
+            CreateTable(
+                "dbo.qrtz_log",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        node_id = c.Int(nullable: false),
+                        task_id = c.Int(nullable: false),
+                        mgs = c.String(nullable: false, maxLength: 4000, storeType: "nvarchar"),
+                        log_type = c.Byte(nullable: false),
+                        is_deleted = c.Boolean(nullable: false),
+                        deleter_user_id = c.Long(),
+                        deletion_time = c.DateTime(precision: 0),
+                        last_modification_time = c.DateTime(precision: 0),
+                        last_modifier_user_id = c.Long(),
+                        creation_time = c.DateTime(nullable: false, precision: 0),
+                        creator_user_id = c.Long(),
+                    },
+                annotations: new Dictionary<string, object>
+                {
+                    { "DynamicFilter_Log_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                })
+                .PrimaryKey(t => t.id);
+            
         }
         
         public override void Down()
@@ -256,27 +248,29 @@ namespace TaskManager.Migrations
             DropForeignKey("dbo.qrtz_version_info", "task_id", "dbo.qrtz_task");
             DropForeignKey("dbo.qrtz_temp_data", "task_id", "dbo.qrtz_task");
             DropForeignKey("dbo.qrtz_performance", "task_id", "dbo.qrtz_task");
-            DropForeignKey("dbo.qrtz_performance", "node_id", "dbo.qrtz_node");
             DropForeignKey("dbo.qrtz_task", "node_id", "dbo.qrtz_node");
-            DropForeignKey("dbo.qrtz_log", "task_id", "dbo.qrtz_task");
-            DropForeignKey("dbo.qrtz_log", "node_id", "dbo.qrtz_node");
-            DropForeignKey("dbo.qrtz_error", "task_id", "dbo.qrtz_task");
             DropForeignKey("dbo.qrtz_command", "task_id", "dbo.qrtz_task");
             DropForeignKey("dbo.qrtz_task", "category_id", "dbo.qrtz_category");
-            DropForeignKey("dbo.qrtz_error", "node_id", "dbo.qrtz_node");
+            DropForeignKey("dbo.qrtz_performance", "node_id", "dbo.qrtz_node");
             DropForeignKey("dbo.qrtz_command", "node_id", "dbo.qrtz_node");
             DropIndex("dbo.qrtz_version_info", new[] { "task_id" });
             DropIndex("dbo.qrtz_temp_data", new[] { "task_id" });
-            DropIndex("dbo.qrtz_performance", new[] { "task_id" });
-            DropIndex("dbo.qrtz_performance", new[] { "node_id" });
-            DropIndex("dbo.qrtz_log", new[] { "task_id" });
-            DropIndex("dbo.qrtz_log", new[] { "node_id" });
             DropIndex("dbo.qrtz_task", new[] { "node_id" });
             DropIndex("dbo.qrtz_task", new[] { "category_id" });
-            DropIndex("dbo.qrtz_error", new[] { "task_id" });
-            DropIndex("dbo.qrtz_error", new[] { "node_id" });
+            DropIndex("dbo.qrtz_performance", new[] { "task_id" });
+            DropIndex("dbo.qrtz_performance", new[] { "node_id" });
             DropIndex("dbo.qrtz_command", new[] { "task_id" });
             DropIndex("dbo.qrtz_command", new[] { "node_id" });
+            DropTable("dbo.qrtz_log",
+                removedAnnotations: new Dictionary<string, object>
+                {
+                    { "DynamicFilter_Log_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                });
+            DropTable("dbo.qrtz_error",
+                removedAnnotations: new Dictionary<string, object>
+                {
+                    { "DynamicFilter_Error_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                });
             DropTable("dbo.qrtz_version_info",
                 removedAnnotations: new Dictionary<string, object>
                 {
@@ -287,25 +281,15 @@ namespace TaskManager.Migrations
                 {
                     { "DynamicFilter_TempData_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 });
-            DropTable("dbo.qrtz_performance",
-                removedAnnotations: new Dictionary<string, object>
-                {
-                    { "DynamicFilter_Performance_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
-                });
-            DropTable("dbo.qrtz_log",
-                removedAnnotations: new Dictionary<string, object>
-                {
-                    { "DynamicFilter_Log_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
-                });
             DropTable("dbo.qrtz_task",
                 removedAnnotations: new Dictionary<string, object>
                 {
                     { "DynamicFilter_Task_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 });
-            DropTable("dbo.qrtz_error",
+            DropTable("dbo.qrtz_performance",
                 removedAnnotations: new Dictionary<string, object>
                 {
-                    { "DynamicFilter_Error_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
+                    { "DynamicFilter_Performance_SoftDelete", "EntityFramework.DynamicFilters.DynamicFilterDefinition" },
                 });
             DropTable("dbo.qrtz_node",
                 removedAnnotations: new Dictionary<string, object>

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.EntityFramework;
+using TaskManager.Logs;
+using TaskManager.Node.TaskManager.SystemRuntime;
 
 namespace TaskManager.Node.Tools
 {
@@ -15,43 +18,52 @@ namespace TaskManager.Node.Tools
         /// 添加日志
         /// </summary>
         /// <param name="model"></param>
-        //private static void AddLog(tb_log_model model)
-        //{
-        //    //try
-        //    //{
-        //    //    SqlHelper.ExcuteSql(GlobalConfig.TaskDataBaseConnectString, (c) =>
-        //    //    {
-        //    //        tb_log_dal logdal = new tb_log_dal();
-        //    //        model.msg = model.msg.SubString2(1000);
-        //    //        logdal.Add2(c, model);
-        //    //    });
-        //    //}
-        //    //catch (Exception exp)
-        //    //{
-        //    //    XXF.Log.ErrorLog.Write("添加日志至数据库出错", exp);
-        //    //}
-        //}
+        private static void AddLog(Log model)
+        {
+            try
+            {
+                using (var context = new TaskManagerDbContext())
+                {
+                    var a = context.Categories.Count();
+
+
+                    context.Logs.Add(model);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception exp)
+            {
+                //XXF.Log.ErrorLog.Write("添加日志至数据库出错", exp);
+            }
+        }
         /// <summary>
         /// 添加错误日志
         /// </summary>
         /// <param name="model"></param>
-        //private static void AddError(tb_error_model model)
-        //{
-        //    try
-        //    {
-        //        AddLog(new tb_log_model { logcreatetime = model.errorcreatetime, logtype = model.errortype, msg = model.msg, taskid = model.taskid, nodeid = GlobalConfig.NodeID });
-        //        SqlHelper.ExcuteSql(GlobalConfig.TaskDataBaseConnectString, (c) =>
-        //        {
-        //            tb_error_dal errordal = new tb_error_dal();
-        //            model.msg = model.msg.SubString2(1000);
-        //            errordal.Add2(c, model);
-        //        });
-        //    }
-        //    catch (Exception exp)
-        //    {
-        //        XXF.Log.ErrorLog.Write("添加错误日志至数据库出错", exp);
-        //    }
-        //}
+        private static void AddError(Errors.Error model)
+        {
+            try
+            {
+                AddLog(
+                    new Log()
+                {
+                    LogType = model.ErrorType,
+                    Msg = model.Msg,
+                    TaskId = model.TaskId,
+                    NodeId = GlobalConfig.NodeId
+                });
+                using (var context = new TaskManagerDbContext())
+                {
+                    context.Errors.Add(model);
+                    context.SaveChanges();
+                }
+
+            }
+            catch (Exception exp)
+            {
+                //XXF.Log.ErrorLog.Write("添加错误日志至数据库出错", exp);
+            }
+        }
         /// <summary>
         /// 添加节点日志
         /// </summary>
@@ -59,7 +71,14 @@ namespace TaskManager.Node.Tools
         public static void AddNodeLog(string msg)
         {
             //CommLog.Write(msg);
-            //tb_log_model model = new tb_log_model()
+            var model = new Log()
+            {
+                LogType = (int)EnumTaskLogType.SystemLog,
+                Msg = msg,
+                TaskId = 0,
+                NodeId = GlobalConfig.NodeId
+            };
+            //log model = new tb_log_model()
             //{
             //    logcreatetime = DateTime.Now,
             //    logtype = (byte)XXF.BaseService.TaskManager.SystemRuntime.EnumTaskLogType.SystemLog,
@@ -67,7 +86,7 @@ namespace TaskManager.Node.Tools
             //    taskid = 0,
             //    nodeid = GlobalConfig.NodeID
             //};
-            //AddLog(model);
+            AddLog(model);
         }
         /// <summary>
         /// 添加节点错误日志
