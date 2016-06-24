@@ -23,10 +23,11 @@ namespace TaskManager.Node
 
         private void TaskNode_Load(object sender, EventArgs e)
         {
+            Test test = new Test();
             try
             {
-                //if (GlobalConfig.NodeId <= 0)
-                //{
+                if (GlobalConfig.NodeId <= 0)
+                {
                     //string url = GlobalConfig.TaskManagerWebUrl.TrimEnd('/') + "/OpenApi/" + "GetNodeConfigInfo/";
                     //ClientResult r = ApiHelper.Get(url, new
                     //{
@@ -49,19 +50,19 @@ namespace TaskManager.Node
                     //    GlobalConfig.TaskDataBaseConnectString = appconfiginfo.TaskDataBaseConnectString;
                     //if (GlobalConfig.NodeId <= 0)
                     //    GlobalConfig.NodeId = appconfiginfo.NodeId;
-                //}
+                }
 
                 var path = GlobalConfig.TaskSharedDllsDir + @"\";
                 IoHelper.CreateDirectory(path);
 
                 CommandQueueProcessor.Run();
 
-                ////注册后台监控
-                //GlobalConfig.Monitors.Add(new SystemMonitor.TaskRecoverMonitor());
-                //GlobalConfig.Monitors.Add(new SystemMonitor.TaskPerformanceMonitor());
-                //GlobalConfig.Monitors.Add(new SystemMonitor.NodeHeartBeatMonitor());
-                //GlobalConfig.Monitors.Add(new SystemMonitor.TaskStopMonitor());
-                //this.Text = this.Text + GlobalConfig.NodeId;
+                //注册后台监控
+                GlobalConfig.Monitors.Add(new SystemMonitor.TaskRecoverMonitor());
+                GlobalConfig.Monitors.Add(new SystemMonitor.TaskPerformanceMonitor());
+                GlobalConfig.Monitors.Add(new SystemMonitor.NodeHeartBeatMonitor());
+                GlobalConfig.Monitors.Add(new SystemMonitor.TaskStopMonitor());
+                this.Text = this.Text + GlobalConfig.NodeId;
             }
             catch (Exception exp)
             {

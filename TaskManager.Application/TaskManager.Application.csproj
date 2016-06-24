@@ -110,6 +110,9 @@
     <Compile Include="Commands\ICommandAppService.cs" />
     <Compile Include="DataTablesRequest.cs" />
     <Compile Include="DataTablesResponse.cs" />
+    <Compile Include="Logs\Dto\LogInput.cs" />
+    <Compile Include="Logs\ILogAppService.cs" />
+    <Compile Include="Logs\LogAppService.cs" />
     <Compile Include="Nodes\Dto\NodeInput.cs" />
     <Compile Include="Nodes\Dto\NodeListInput.cs" />
     <Compile Include="Nodes\Dto\NodeListOutput.cs" />

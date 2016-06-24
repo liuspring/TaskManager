@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskManager.EntityFramework;
 using TaskManager.Logs;
 using TaskManager.Node.TaskManager.SystemRuntime;
@@ -14,6 +12,11 @@ namespace TaskManager.Node.Tools
     /// </summary>
     public static class LogHelper
     {
+        static LogHelper()
+        {
+
+        }
+
         /// <summary>
         /// 添加日志
         /// </summary>
