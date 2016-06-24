@@ -5,8 +5,10 @@ using Abp.AutoMapper;
 namespace TaskManager.Tasks.Dto
 {
     [AutoMapFrom(typeof(Task))]
-    public class CreateTaskInput:IInputDto
+    public class TaskInput : IInputDto
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(50)]
         public string TaskName { get; set; }
@@ -23,6 +25,9 @@ namespace TaskManager.Tasks.Dto
 
         [Required]
         public string AppConfigJson { get; set; }
+
+        [StringLength(50)]
+        public string TempDataJson { get; set; }
 
         [Required]
         public string Cron { get; set; }

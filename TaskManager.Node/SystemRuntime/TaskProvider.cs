@@ -48,7 +48,7 @@ namespace TaskManager.Node.SystemRuntime
             taskruntimeinfo.TaskLock = new TaskLock();
 
             var task = _taskAppService.GetTask(taskid);
-            taskruntimeinfo.TaskModel = task;
+            //taskruntimeinfo.TaskModel = task;
             var versionInfo = _versionInfoService.GetVersionInfo(taskid, taskruntimeinfo.TaskModel.Version);
             taskruntimeinfo.TaskVersionModel = versionInfo;
             string filelocalcachepath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllCompressFileCacheDir + @"\" + taskruntimeinfo.TaskModel.Id + @"\" + taskruntimeinfo.TaskModel.Version + @"\" +

@@ -125,8 +125,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\IRoleAppService.cs" />
     <Compile Include="Roles\Dto\UpdateRolePermissionsInput.cs" />
-    <Compile Include="Tasks\Dto\CreateTaskInput.cs" />
-    <Compile Include="Tasks\Dto\TaskDetailOutput.cs" />
+    <Compile Include="Tasks\Dto\TaskInput.cs" />
+    <Compile Include="Tasks\Dto\TaskOutput.cs" />
     <Compile Include="Tasks\Dto\TaskListInput.cs" />
     <Compile Include="Tasks\Dto\TaskListOutput.cs" />
     <Compile Include="Tasks\ITaskAppService.cs" />
@@ -151,6 +151,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{0457041F-E667-470C-A3F6-DD507982250A}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskManager.Core\TaskManager.Core.csproj">
       <Project>{17298ea0-af73-4f30-b6f1-2066100d7d74}</Project>
       <Name>TaskManager.Core</Name>

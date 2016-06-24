@@ -9,6 +9,7 @@
             $("#FileZipName").val(data.response.result.filename);
             $("#FileZipPath").val(data.response.result.filesavename);
         } else {
+            $("#FileUpload").on("fileclear");
             gDialog.fAlert("上传文件失败！");
         }
     }).on("filecleared", function (event, data, previewId, index) {
@@ -37,7 +38,7 @@
         $.post($form.attr('action'), $form.serialize(), function (result) {
             if (result.ret) {
                 message_box.show('<h4>保存成功！</h4>', 'success');
-                window.location.href = "";
+                window.location.href = "/tasks/index";
             } else {
                 message_box.show('<h4>保存失败：</h4>' + result.msg + '！', 'danger');
                 $("#btnSave").removeAttr("disabled");

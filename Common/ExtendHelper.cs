@@ -251,7 +251,7 @@ namespace Common
         {
             if (obj == null || string.IsNullOrEmpty(obj.ToString()))
                 return strValue;
-            return obj.ToString();
+            return obj.ToString().Trim();
         }
 
         /// <summary>

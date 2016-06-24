@@ -4,7 +4,7 @@ using Abp.AutoMapper;
 namespace TaskManager.Tasks.Dto
 {
     [AutoMapFrom(typeof(Task))]
-    public class TaskDetailOutput : BaseEntity, IOutputDto
+    public class TaskOutput : BaseEntity, IOutputDto
     {
         public string TaskName { get; set; }
 
@@ -18,6 +18,8 @@ namespace TaskManager.Tasks.Dto
 
         public string AppConfigJson { get; set; }
 
+        public string TempDataJson { get; set; }
+
         public string Cron { get; set; }
 
         public string MainClassDllFileName { get; set; }
@@ -25,5 +27,8 @@ namespace TaskManager.Tasks.Dto
         public string MainClassNameSpace { get; set; }
 
         public string Remark { get; set; }
+        public string FileZipPath { get; set; }
+
+        public string FileZipName { get; set; }
     }
 }

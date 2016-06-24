@@ -23,5 +23,16 @@ namespace TaskManager.TempDatas
         [Description("数据库临时数据json")]
         public string DataJson { get; set; }
 
+
+        public static TempData Create(int taskId, string dataJson)
+        {
+            var tempData = new TempData
+            {
+                TaskId = taskId,
+                DataJson = dataJson
+            };
+            return tempData;
+        }
+
     }
 }

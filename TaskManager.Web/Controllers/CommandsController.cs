@@ -38,7 +38,7 @@ namespace TaskManager.Web.Controllers
         /// 获得分类列表
         /// </summary>
         /// <returns></returns>
-        public JsonResult AjaxCategoryList()
+        public JsonResult AjaxCommandList()
         {
             var input = new CommandListInput(Request)
             {

@@ -43,9 +43,15 @@ namespace Common
             try
             {
                 string directoryName = Path.GetDirectoryName(filepath);
+                if (directoryName == null)
+                    throw new ArgumentNullException("directoryName");
                 if (!Directory.Exists(directoryName))
                 {
                     Directory.CreateDirectory(directoryName);
+                }
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
                 }
             }
             catch (Exception exception)

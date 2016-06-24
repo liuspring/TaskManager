@@ -4,12 +4,16 @@ namespace TaskManager.Tasks.Dto
 {
     public class TaskListInput : DataTablesRequest
     {
-        public TaskListInput(HttpRequestBase request) : base(request)
+        public TaskListInput(HttpRequestBase request)
+            : base(request)
         {
         }
 
-        public TaskListInput(HttpRequest httpRequest) : base(httpRequest)
+        public TaskListInput(HttpRequest httpRequest)
+            : base(httpRequest)
         {
         }
+
+        public string TaskName { get; set; }
     }
 }

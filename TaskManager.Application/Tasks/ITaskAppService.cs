@@ -6,15 +6,17 @@ namespace TaskManager.Tasks
 {
     public interface ITaskAppService : IApplicationService
     {
-        int Create(CreateTaskInput input);
+        int Create(TaskInput input);
+
+        TaskOutput GetTask(int id);
+
+        void Update(TaskInput input);
 
         List<TaskListOutput> GetList(TaskListInput input);
 
         int GetListTotal(TaskListInput input);
 
         List<Task> GetAllList();
-
-        Task GetTask(int id);
 
         void UpdateTaskState(int taskId, int state);
     }

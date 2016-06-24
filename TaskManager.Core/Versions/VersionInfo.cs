@@ -37,16 +37,27 @@ namespace TaskManager.Versions
         [Description("上传文件路径")]
         public string ZipFilePath { get; set; }
 
-        public static VersionInfo Create(int taskId, string zipFileName, string zipFilePath)
+        public static VersionInfo Create(int taskId,int versionType, string zipFileName, string zipFilePath)
         {
             var versionInfo = new VersionInfo
             {
                 TaskId = taskId,
-                VersionType = 0,
+                VersionType = versionType,
                 ZipFileName = zipFileName,
                 ZipFilePath = zipFilePath
             };
 
+            FileStream fs = File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + zipFilePath);
+            var buffer = new byte[fs.Length];
+            fs.Read(buffer, 0, buffer.Length);
+            versionInfo.ZipFile = buffer;
+            return versionInfo;
+        }
+
+        public static VersionInfo Update(VersionInfo versionInfo, string zipFileName, string zipFilePath)
+        {
+            versionInfo.ZipFileName = zipFileName;
+            versionInfo.ZipFilePath = zipFilePath;
             FileStream fs = File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + zipFilePath);
             var buffer = new byte[fs.Length];
             fs.Read(buffer, 0, buffer.Length);

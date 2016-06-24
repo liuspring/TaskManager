@@ -1,4 +1,6 @@
 ﻿@using Abp.Web.Mvc.Extensions
+@using Common
+@using TaskManager.Enum
 @{
     ViewBag.Title = "命令列表";
     ViewBag.TitleSmall = "";
@@ -16,7 +18,8 @@
     <div class="panel-body">
         <div class="col-md-6">
             <div class="input-group">
-                <input class="form-control" id="Content" name="Content" placeholder="请输入命令名称" value="" maxlength="50" />
+                @Html.DropDownList("Content", EnumExt.GetSelectList(typeof(EnumTaskCommandName)),
+                "",new { @class = "form-control" })
                 <span class="input-group-btn">
                     <button class="btn btn-success" type="button" id="btnSearch">
                         搜索
@@ -39,7 +42,7 @@
 
 <div class="tab-content panel panel-default">
     <div class="panel-body active table-responsive">
-        <table id="tb_Command" class="table table-bordered table-hover dataTable">
+        <table id="tb_command" class="table table-bordered table-hover dataTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -67,8 +70,8 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3" for="CommandName">命令名称</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" id="CommandName" name="CommandName" value=""
-                                       placeholder="请输入命令名称" required maxlength="50">
+                                @Html.DropDownList("CommandName", EnumExt.GetSelectList(typeof(EnumTaskCommandName)),
+                                new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,20 +79,17 @@
                             <div class="col-md-8">
                                 @Html.DropDownList("NodeId", ViewData["Nodes"] as SelectList, new { @class = "form-control" })
                             </div>
-                            <div class="col-md-8  col-md-offset-3">
-                                <span class="help-block">示范:127.0.0.1</span>
-                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="CategoryId" class="col-md-3 control-label">任务</label>
+                            <label for="TaskId" class="col-md-3 control-label">任务</label>
                             <div class="col-md-8">
-                                @Html.DropDownList("CategoryId", ViewData["Tasks"] as SelectList, new { @class = "form-control" })
+                                @Html.DropDownList("TaskId", ViewData["Tasks"] as SelectList, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="CommandJson" class="col-md-3 control-label">命令json</label>
                             <div class="col-md-8">
-                                <textarea class="form-control" name="CommandJson" maxlength="1000" required
+                                <textarea class="form-control" name="CommandJson" id="CommandJson" maxlength="1000" required
                                           rows="3" placeholder="请输入命令json"></textarea>
                             </div>
                             <div class="col-md-8  col-md-offset-3">

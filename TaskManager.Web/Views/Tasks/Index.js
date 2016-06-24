@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var grid = new initDataTables();
+    var grid = new InitDataTables();
     grid.init({
         src: $("#tb_task"),
         dataTable: {
@@ -8,7 +8,7 @@
             //向服务器传额外的参数
             "fnServerParams": function (aoData) {
                 aoData.push(
-                    //{ "name": "tab", "value": $("#navTab").val() }
+                     { "name": "TaskName", "value": $("#Content").val() }
                 ); //查询内容
             },
             //配置列要显示的数据
@@ -32,7 +32,7 @@
                 {
                     "render": function (data, type, row, me) {
                         var opt = "";
-                        opt += '<a href="/User/CreateUser/' + data + '" class="btn default btn-xs green" title="编辑"><i class="fa fa-edit"></i>编辑</a>';
+                        opt += '<a href="/Tasks/Edit/' + data + '" class="btn default btn-xs green" title="编辑"><i class="fa fa-edit"></i>编辑</a>';
                         return opt;
                     },
                     'orderable': false,
@@ -43,7 +43,7 @@
         }
     });
     //搜索
-    $("#btnsearch").click(function () {
+    $("#btnSearch").click(function () {
         grid.submitFilter();
     });
 
