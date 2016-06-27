@@ -34,6 +34,17 @@ namespace TaskManager.Errors
         [Description("错误类型")]
         public byte ErrorType { get; set; }
 
+        public static Error Create(int nodeId, int taskId, string msg, byte errorType)
+        {
+            var error = new Error
+            {
+                NodeId = nodeId,
+                TaskId = taskId,
+                Msg = msg,
+                ErrorType = errorType
+            };
+            return error;
+        }
 
     }
 }

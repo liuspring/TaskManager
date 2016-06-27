@@ -454,6 +454,7 @@
     <Content Include="Abp\Framework\styles\abp.mixings.less" />
     <Content Include="Abp\Framework\styles\abp.less" />
     <Content Include="Abp\Framework\styles\abp.css.map" />
+    <Content Include="Readme.txt" />
     <Content Include="Scripts\AdminLTE\app.js" />
     <Content Include="Scripts\AdminLTE\app.min.js" />
     <Content Include="Scripts\AdminLTE\demo.js" />

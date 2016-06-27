@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
+using Common;
 
 namespace TaskManager.Node
 {
@@ -11,10 +13,20 @@ namespace TaskManager.Node
         /// 任务数据库连接
         /// </summary>
         public static string TaskDataBaseConnectString { get; set; }
+
         /// <summary>
         /// 当前节点标识
         /// </summary>
-        public static int NodeId { get; set; }
+        public static int NodeId
+        {
+            get
+            {
+                var nodeId = ConfigurationManager.AppSettings["NodeId"];
+                if (nodeId == null)
+                    return 0;
+                return nodeId.ToInt();
+            }
+        }
 
         /// <summary>
         /// 任务调度平台web url地址
@@ -23,7 +35,7 @@ namespace TaskManager.Node
         {
             get
             {
-                return System.Configuration.ConfigurationManager.AppSettings["TaskManagerWebUrl"];
+                return ConfigurationManager.AppSettings["TaskManagerWebUrl"];
             }
         }
         /// <summary>

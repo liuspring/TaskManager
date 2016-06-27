@@ -12,19 +12,9 @@ namespace TaskManager.Node
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
-            if (args != null && args.Length > 0)
-            {
-                if (args.Length == 1)
-                {
-                    GlobalConfig.NodeId = Convert.ToInt32(args[0]);
-                }
-                else if (args.Length == 2)
-                {
-                    GlobalConfig.NodeId = Convert.ToInt32(args[0]);
-                }
-            }
+            //基于ABP项目加载程序集到Ioc容器中
             using (var bootstrapper = new AbpBootstrapper())
             {
                 bootstrapper.IocManager.IocContainer

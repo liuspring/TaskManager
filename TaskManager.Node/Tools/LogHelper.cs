@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TaskManager.EntityFramework;
+using Abp.Dependency;
+using TaskManager.Errors;
+using TaskManager.Errors.Dto;
 using TaskManager.Logs;
+using TaskManager.Logs.Dto;
 using TaskManager.Node.TaskManager.SystemRuntime;
 
 namespace TaskManager.Node.Tools
@@ -12,59 +13,54 @@ namespace TaskManager.Node.Tools
     /// </summary>
     public static class LogHelper
     {
+        private readonly static ILogAppService LogAppService;
+        private readonly static IErrorAppService ErrorAppService;
         static LogHelper()
         {
+            LogAppService = IocManager.Instance.Resolve<ILogAppService>();
+            ErrorAppService = IocManager.Instance.Resolve<IErrorAppService>();
 
         }
 
         /// <summary>
         /// 添加日志
         /// </summary>
-        /// <param name="model"></param>
-        private static void AddLog(Log model)
+        /// <param name="input"></param>
+        private static void AddLog(LogInput input)
         {
             try
             {
-                using (var context = new TaskManagerDbContext())
-                {
-                    var a = context.Categories.Count();
+                LogAppService.Create(input);
 
-
-                    context.Logs.Add(model);
-                    context.SaveChanges();
-                }
             }
-            catch (Exception exp)
+            catch (Exception ex)
             {
-                //XXF.Log.ErrorLog.Write("添加日志至数据库出错", exp);
+                //todo 记录日志文本
+                throw;
             }
         }
         /// <summary>
         /// 添加错误日志
         /// </summary>
-        /// <param name="model"></param>
-        private static void AddError(Errors.Error model)
+        /// <param name="input"></param>
+        private static void AddError(ErrorInput input)
         {
+            var log = new LogInput
+            {
+                LogType = input.ErrorType,
+                Msg = input.Msg,
+                TaskId = input.TaskId,
+                NodeId = input.NodeId
+            };
             try
             {
-                AddLog(
-                    new Log()
-                {
-                    LogType = model.ErrorType,
-                    Msg = model.Msg,
-                    TaskId = model.TaskId,
-                    NodeId = GlobalConfig.NodeId
-                });
-                using (var context = new TaskManagerDbContext())
-                {
-                    context.Errors.Add(model);
-                    context.SaveChanges();
-                }
-
+                AddLog(log);
+                ErrorAppService.Create(input);
             }
-            catch (Exception exp)
+            catch (Exception)
             {
-                //XXF.Log.ErrorLog.Write("添加错误日志至数据库出错", exp);
+
+                throw;
             }
         }
         /// <summary>
@@ -73,77 +69,77 @@ namespace TaskManager.Node.Tools
         /// <param name="msg"></param>
         public static void AddNodeLog(string msg)
         {
-            //CommLog.Write(msg);
-            var model = new Log()
+            var model = new LogInput()
             {
-                LogType = (int)EnumTaskLogType.SystemLog,
+                LogType = (byte)EnumTaskLogType.SystemLog,
                 Msg = msg,
                 TaskId = 0,
                 NodeId = GlobalConfig.NodeId
             };
-            //log model = new tb_log_model()
-            //{
-            //    logcreatetime = DateTime.Now,
-            //    logtype = (byte)XXF.BaseService.TaskManager.SystemRuntime.EnumTaskLogType.SystemLog,
-            //    msg = msg,
-            //    taskid = 0,
-            //    nodeid = GlobalConfig.NodeID
-            //};
+
             AddLog(model);
         }
+
         /// <summary>
         /// 添加节点错误日志
         /// </summary>
         /// <param name="msg"></param>
-        public static void AddNodeError(string msg, Exception exp)
+        /// <param name="ex"></param>
+        public static void AddNodeError(string msg, Exception ex)
         {
-            //if (exp == null)
-            //    exp = new Exception();
-            //ErrorLog.Write(msg, exp);
-            //tb_error_model model = new tb_error_model()
-            //{
-            //    errorcreatetime = DateTime.Now,
-            //    errortype = (byte)XXF.BaseService.TaskManager.SystemRuntime.EnumTaskLogType.SystemError,
-            //    msg = msg + " 错误信息:" + exp.Message + " 堆栈:" + exp.StackTrace,
-            //    taskid = 0,
-            //    nodeid = GlobalConfig.NodeID
-            //};
-            //AddError(model);
+            if (ex == null)
+                ex = new Exception();
+            //todo 记录错误信息
+
+            var model = new ErrorInput
+            {
+                ErrorType = (byte)EnumTaskLogType.SystemError,
+                Msg = msg + " 错误信息:" + ex.Message + " 堆栈:" + ex.StackTrace,
+                TaskId = 0,
+                NodeId = GlobalConfig.NodeId
+            };
+            AddError(model);
         }
+
         /// <summary>
         /// 添加任务日志
         /// </summary>
         /// <param name="msg"></param>
-        public static void AddTaskLog(string msg, int taskid)
+        /// <param name="taskId"></param>
+        /// <param name="logType"></param>
+        public static void AddTaskLog(string msg, int taskId, byte logType = (byte)EnumTaskLogType.CommonLog)
         {
-            //tb_log_model model = new tb_log_model()
-            //{
-            //    logcreatetime = DateTime.Now,
-            //    logtype = (byte)XXF.BaseService.TaskManager.SystemRuntime.EnumTaskLogType.CommonLog,
-            //    msg = msg,
-            //    taskid = taskid,
-            //    nodeid = GlobalConfig.NodeID
-            //};
-            //AddLog(model);
+            var log = new LogInput
+            {
+                LogType = (byte)EnumTaskLogType.CommonLog,
+                Msg = msg,
+                TaskId = taskId,
+                NodeId = GlobalConfig.NodeId
+            };
+            AddLog(log);
         }
+
         /// <summary>
         /// 添加任务错误日志
         /// </summary>
         /// <param name="msg"></param>
-        public static void AddTaskError(string msg, int taskid, Exception exp)
+        /// <param name="taskId"></param>
+        /// <param name="ex"></param>
+        /// <param name="errorType"></param>
+        public static void AddTaskError(string msg, int taskId, Exception ex, byte errorType = (byte)EnumTaskLogType.CommonError)
         {
-            //ErrorLog.Write(msg + "[taskid:" + taskid + "]", exp);
-            //if (exp == null)
-            //    exp = new Exception();
-            //tb_error_model model = new tb_error_model()
-            //{
-            //    errorcreatetime = DateTime.Now,
-            //    errortype = (byte)XXF.BaseService.TaskManager.SystemRuntime.EnumTaskLogType.CommonError,
-            //    msg = msg + " 错误信息:" + exp.Message + " 堆栈:" + exp.StackTrace,
-            //    taskid = taskid,
-            //    nodeid = GlobalConfig.NodeID
-            //};
-            //AddError(model);
+            if (ex == null)
+                ex = new Exception();
+            //todo 记录错误信息
+
+            var error = new ErrorInput
+            {
+                ErrorType = errorType,
+                Msg = msg + " 错误信息:" + ex.Message + " 堆栈:" + ex.StackTrace,
+                TaskId = taskId,
+                NodeId = GlobalConfig.NodeId
+            };
+            AddError(error);
         }
     }
 }

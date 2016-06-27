@@ -172,15 +172,8 @@
     <Compile Include="Corn\CornFactory.cs" />
     <Compile Include="Corn\RunOnceCorn.cs" />
     <Compile Include="Corn\SimpleCorn.cs" />
-    <Compile Include="Dal\ErrorDal.cs" />
-    <Compile Include="Dal\LogDal.cs" />
-    <Compile Include="Dal\TaskDal.cs" />
-    <Compile Include="Dal\TempDataDal.cs" />
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="InitModule.cs" />
-    <Compile Include="Model\ErrorModel.cs" />
-    <Compile Include="Model\LogModel.cs" />
-    <Compile Include="Model\TaskModel.cs" />
     <Compile Include="SystemMonitor\BaseMonitor.cs" />
     <Compile Include="SystemMonitor\NodeHeartBeatMonitor.cs" />
     <Compile Include="SystemMonitor\PingTaskWebMonitor.cs" />

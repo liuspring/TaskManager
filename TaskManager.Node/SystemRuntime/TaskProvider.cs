@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Abp.Dependency;
 using Common;
 using TaskManager.Node.TaskManager;
@@ -11,7 +7,6 @@ using TaskManager.Node.TaskManager.SystemRuntime;
 using TaskManager.Node.Tools;
 using TaskManager.Tasks;
 using TaskManager.Versions;
-using Task = TaskManager.Tasks.Task;
 
 namespace TaskManager.Node.SystemRuntime
 {
@@ -38,56 +33,58 @@ namespace TaskManager.Node.SystemRuntime
         /// <returns></returns>
         public bool Start(int taskid)
         {
-            var taskruntimeinfo = TaskPoolManager.CreateInstance().Get(taskid.ToString());
-            if (taskruntimeinfo != null)
+            var taskRuntimeInfo = TaskPoolManager.CreateInstance().Get(taskid.ToString());
+            if (taskRuntimeInfo != null)
             {
                 throw new Exception("任务已在运行中");
             }
 
-            taskruntimeinfo = new NodeTaskRuntimeInfo();
-            taskruntimeinfo.TaskLock = new TaskLock();
+            taskRuntimeInfo = new NodeTaskRuntimeInfo
+            {
+                TaskLock = new TaskLock(),
+                TaskModel = _taskAppService.GetTaskInfo(taskid)
+            };
+            taskRuntimeInfo.TaskVersionModel = _versionInfoService.GetVersionInfo(taskid, taskRuntimeInfo.TaskModel.Version);
 
-            var task = _taskAppService.GetTask(taskid);
-            //taskruntimeinfo.TaskModel = task;
-            var versionInfo = _versionInfoService.GetVersionInfo(taskid, taskruntimeinfo.TaskModel.Version);
-            taskruntimeinfo.TaskVersionModel = versionInfo;
-            string filelocalcachepath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllCompressFileCacheDir + @"\" + taskruntimeinfo.TaskModel.Id + @"\" + taskruntimeinfo.TaskModel.Version + @"\" +
-                taskruntimeinfo.TaskVersionModel.ZipFileName;
-            string fileinstallpath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllDir + @"\" + taskruntimeinfo.TaskModel.Id;
-            string fileinstallmainclassdllpath = fileinstallpath + @"\" + taskruntimeinfo.TaskModel.MainClassDllFileName;
-            string taskshareddlldir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskSharedDllsDir;
+            string fileLocalCachePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllCompressFileCacheDir + @"\" + taskRuntimeInfo.TaskModel.Id + @"\" + taskRuntimeInfo.TaskModel.Version + @"\" +
+                taskRuntimeInfo.TaskVersionModel.ZipFileName;
+            string fileInstallPath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllDir + @"\" + taskRuntimeInfo.TaskModel.Id;
+            string fileInstallMainClassDllPath = fileInstallPath + @"\" + taskRuntimeInfo.TaskModel.MainClassDllFileName;
+            string taskShareDllDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskSharedDllsDir;
 
-            IoHelper.CreateDirectory(filelocalcachepath);
-            IoHelper.CreateDirectory(fileinstallpath);
-            File.WriteAllBytes(filelocalcachepath, taskruntimeinfo.TaskVersionModel.ZipFile);
+            IoHelper.CreateDirectory(fileLocalCachePath);
+            IoHelper.CreateDirectory(fileInstallPath);
+            File.WriteAllBytes(fileLocalCachePath, taskRuntimeInfo.TaskVersionModel.ZipFile);
 
-            CompressHelper.UnCompress(filelocalcachepath, fileinstallpath);
+            CompressHelper.UnCompress(fileLocalCachePath, fileInstallPath);
             //拷贝共享程序集
-            IoHelper.CopyDirectory(taskshareddlldir, fileinstallpath);
+            IoHelper.CopyDirectory(taskShareDllDir, fileInstallPath);
             try
             {
-                var dlltask = new AppDomainLoader<BaseDllTask>().Load(fileinstallmainclassdllpath, taskruntimeinfo.TaskModel.MainClassNameSpace, out taskruntimeinfo.Domain);
-                dlltask.SystemRuntimeInfo = new TaskSystemRuntimeInfo()
+                var dllTask = new AppDomainLoader<BaseDllTask>().Load(fileInstallMainClassDllPath,
+                    taskRuntimeInfo.TaskModel.MainClassNameSpace,
+                    out taskRuntimeInfo.Domain);
+                dllTask.SystemRuntimeInfo = new TaskSystemRuntimeInfo()
                 {
-                    TaskConnectString = GlobalConfig.TaskDataBaseConnectString,
-                    TaskModel = taskruntimeinfo.TaskModel
+                    //TaskConnectString = GlobalConfig.TaskDataBaseConnectString,
+                    TaskModel = taskRuntimeInfo.TaskModel
                 };
 
-                dlltask.AppConfig = new TaskAppConfigInfo();
-                if (!string.IsNullOrEmpty(taskruntimeinfo.TaskModel.AppConfigJson))
+                dllTask.AppConfig = new TaskAppConfigInfo();
+                if (!string.IsNullOrEmpty(taskRuntimeInfo.TaskModel.AppConfigJson))
                 {
-                    dlltask.AppConfig =
-                        JsonHelper.DeSerialize<TaskAppConfigInfo>(taskruntimeinfo.TaskModel.AppConfigJson);
+                    dllTask.AppConfig =
+                        JsonHelper.DeSerialize<TaskAppConfigInfo>(taskRuntimeInfo.TaskModel.AppConfigJson);
                 }
-                taskruntimeinfo.DllTask = dlltask;
-                bool r = TaskPoolManager.CreateInstance().Add(taskid.ToString(), taskruntimeinfo);
-                _taskAppService.UpdateTaskState(taskid,(int)EnumTaskState.Running);
+                taskRuntimeInfo.DllTask = dllTask;
+                bool r = TaskPoolManager.CreateInstance().Add(taskid.ToString(), taskRuntimeInfo);
+                _taskAppService.UpdateTaskState(taskid, (byte)EnumTaskState.Running);
                 LogHelper.AddTaskLog("节点开启任务成功", taskid);
                 return r;
             }
             catch (Exception exp)
             {
-                DisposeTask(taskid, taskruntimeinfo, true);
+                DisposeTask(taskid, taskRuntimeInfo, true);
                 throw exp;
             }
         }
@@ -105,7 +102,7 @@ namespace TaskManager.Node.SystemRuntime
             }
 
             var r = DisposeTask(taskid, taskruntimeinfo, false);
-            _taskAppService.UpdateTaskState(taskid,(int)EnumTaskState.Stop);
+            _taskAppService.UpdateTaskState(taskid, (byte)EnumTaskState.Stop);
             LogHelper.AddTaskLog("节点关闭任务成功", taskid);
             return r;
         }
@@ -122,7 +119,7 @@ namespace TaskManager.Node.SystemRuntime
                 throw new Exception("任务不在运行中");
             }
             var r = DisposeTask(taskid, taskruntimeinfo, true);
-            _taskAppService.UpdateTaskState(taskid, (int)EnumTaskState.Stop);
+            _taskAppService.UpdateTaskState(taskid, (byte)EnumTaskState.Stop);
             LogHelper.AddTaskLog("节点卸载任务成功", taskid);
             return r;
         }

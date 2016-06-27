@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Abp.AutoMapper;
 using Abp.Domain.Repositories;
@@ -61,6 +62,11 @@ namespace TaskManager.Tasks
             return taskOutput;
         }
 
+        public Task GetTaskInfo(int id)
+        {
+            return _taskRepository.Get(id);
+        }
+
         public void Update(TaskInput input)
         {
             var task = _taskRepository.Get(input.Id);
@@ -87,7 +93,7 @@ namespace TaskManager.Tasks
             }
             else
             {
-                versionInfo = VersionInfo.Update(versionInfo, input.FileZipName, input.FileZipName);
+                versionInfo = VersionInfo.Update(versionInfo, input.FileZipName, input.FileZipPath);
                 _versionInfoRepository.Update(versionInfo);
             }
             var tempData = task.TempDatas.SingleOrDefault(a => a.TaskId == task.Id);
@@ -124,9 +130,40 @@ namespace TaskManager.Tasks
             return _taskRepository.GetAllList();
         }
 
-        public void UpdateTaskState(int taskId, int state)
+        public void UpdateTaskState(int taskId, byte state)
         {
-            throw new System.NotImplementedException();
+            var task = _taskRepository.Get(taskId);
+            task.State = state;
+        }
+
+        public List<Task> GetTasks(int nodeId, int state)
+        {
+            return _taskRepository.GetAll().Where(a => a.NodeId == nodeId && a.State == state).ToList();
+        }
+
+        public void UpdateLastStartTime(int taskId, DateTime time)
+        {
+            var task = _taskRepository.Get(taskId);
+            task.LastStartTime = time;
+        }
+
+        public void UpdateLastEndTime(int taskId, DateTime time)
+        {
+            var task = _taskRepository.Get(taskId);
+            task.LastEndTime = time;
+        }
+
+        public void UpdateTaskError(int taskId, DateTime time)
+        {
+            var task = _taskRepository.Get(taskId);
+            task.LastErrorTime = time;
+        }
+
+        public void UpdateTaskSuccess(int taskId)
+        {
+            var task = _taskRepository.Get(taskId);
+            task.ErrorCount = 0;
+            task.RunCount = task.RunCount + 1;
         }
     }
 }

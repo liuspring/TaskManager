@@ -15,5 +15,11 @@ namespace TaskManager.Commands
         List<CommandListOutput> GetList(CommandListInput input);
 
         int GetListTotal(CommandListInput input);
+
+        int GetMaxCommandId();
+
+        List<Command> GetCommands(int nodeId, int lastMaxId);
+
+        void UpdateStateById(int id, byte state);
     }
 }

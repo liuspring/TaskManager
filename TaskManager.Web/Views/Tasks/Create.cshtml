@@ -17,7 +17,7 @@
     <div class="panel-body">
         <form id="categoryForm" action="@Url.Action("AjaxCreate")" class="form-horizontal">
             <div class="hidden">
-                <input type="hidden" id="Id" value="@Model.Id" />
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
             </div>
             <div class="form-group">
                 <label for="TaskName" class="col-md-2 control-label">任务名称</label>
@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label for="NodeId" class="col-md-2 control-label">节点</label>
                 <div class="col-md-6">
-                    @Html.DropDownListFor(a => a.NodeId, ViewData["Categories"] as SelectList,
+                    @Html.DropDownListFor(a => a.NodeId, ViewData["Nodes"] as SelectList,
                         new { @class = "form-control" })
                 </div>
             </div>

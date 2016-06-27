@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManager.Node.TaskManager.SystemRuntime;
+using TaskManager.Node.Tools;
 
 namespace TaskManager.Node.TaskManager.OpenOperator
 {
@@ -42,7 +40,6 @@ namespace TaskManager.Node.TaskManager.OpenOperator
         /// <summary>
         /// 从本地临时文件获取任务临时数据 ".json.txt"
         /// </summary>
-        /// <param name="obj"></param>
         public T GetLocalTempData<T>() where T : class
         {
             return DllTask.SystemRuntimeOperator.GetLocalTempData<T>();
@@ -62,7 +59,6 @@ namespace TaskManager.Node.TaskManager.OpenOperator
         /// <summary>
         /// 获取数据库任务临时数据
         /// </summary>
-        /// <param name="obj"></param>
         public T GetDataBaseTempData<T>() where T : class
         {
             if (DllTask.IsTesting == false)
@@ -76,37 +72,16 @@ namespace TaskManager.Node.TaskManager.OpenOperator
         /// <param name="msg"></param>
         public void Log(string msg)
         {
-            //if (DllTask.IsTesting == false)
-            //    DllTask.SystemRuntimeOperator.AddLog(new model.tb_log_model
-            //    {
-            //        logcreatetime = DateTime.Now,
-            //        logtype = (byte)EnumTaskLogType.CommonLog,
-            //        msg = msg,
-            //        taskid = DllTask.SystemRuntimeInfo.TaskModel.id,
-            //        nodeid = DllTask.SystemRuntimeInfo.TaskModel.nodeid
-            //    });
-            //else
-            //    Debug.WriteLine("测试日志记录:" + msg);
+            LogHelper.AddTaskLog(msg, DllTask.SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.CommonLog);
         }
         /// <summary>
         /// 写错误日志至线上数据库,这些错误会通知到开发人员，所以不要写一些正常的业务错误
         /// </summary>
         /// <param name="msg"></param>
-        /// <param name="exp"></param>
-        public void Error(string msg, Exception exp)
+        /// <param name="ex"></param>
+        public void Error(string msg, Exception ex)
         {
-            //msg = (msg + " 错误信息:" + exp.Message + " 堆栈打印:" + exp.StackTrace);
-            //if (DllTask.IsTesting == false)
-            //    DllTask.SystemRuntimeOperator.AddError(new model.tb_error_model
-            //    {
-            //        errorcreatetime = DateTime.Now,
-            //        errortype = (byte)EnumTaskLogType.CommonError,
-            //        msg = msg,
-            //        taskid = DllTask.SystemRuntimeInfo.TaskModel.id,
-            //        nodeid = DllTask.SystemRuntimeInfo.TaskModel.nodeid
-            //    });
-            //else
-            //    Debug.WriteLine("测试错误日志记录:" + msg);
+            LogHelper.AddTaskError("错误信息", DllTask.SystemRuntimeInfo.TaskModel.Id, ex);
         }
     }
 }

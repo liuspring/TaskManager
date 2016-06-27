@@ -1,9 +1,13 @@
 ﻿using System;
+using Abp.Dependency;
+using Abp.Logging;
 using Common;
-using TaskManager.Node.Dal;
-using TaskManager.Node.Model;
-using XXF.Extensions;
-using XXF.ProjectTool;
+using TaskManager.Errors.Dto;
+using TaskManager.Logs.Dto;
+using TaskManager.Tasks;
+using TaskManager.TempDatas;
+using TaskManager.TempDatas.Dto;
+using LogHelper = TaskManager.Node.Tools.LogHelper;
 
 namespace TaskManager.Node.TaskManager.SystemRuntime
 {
@@ -20,9 +24,16 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
 
         protected string Localtempdatafilename = "localtempdata.json.txt";
 
+
+        private readonly ITaskAppService _TaskAppService;
+        private readonly ITempDataAppService _TempDataAppService;
+
+
         public TaskSystemRuntimeOperator(BaseDllTask dlltask)
         {
             DllTask = dlltask;
+            //_TaskAppService = IocManager.Instance.Resolve<ITaskAppService>();
+            //_TempDataAppService = IocManager.Instance.Resolve<ITempDataAppService>();
         }
 
         public void SaveLocalTempData(object obj)
@@ -42,21 +53,17 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
         }
         public void SaveDataBaseTempData(object obj)
         {
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
+            var tempData = new TempDataInput
             {
-                var tempDataDal = new TempDataDal();
-                tempDataDal.SaveTempData(c, DllTask.SystemRuntimeInfo.TaskModel.Id, JsonHelper.Serialize(obj));
-            });
+                TaskId = DllTask.SystemRuntimeInfo.TaskModel.Id,
+                DataJson = JsonHelper.Serialize(obj)
+            };
+            _TempDataAppService.Create(tempData);
         }
         public T GetDataBaseTempData<T>() where T : class
         {
-            string json = null;
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            {
-                var tempDataDal = new TempDataDal();
-
-                json = tempDataDal.GetTempData(c, DllTask.SystemRuntimeInfo.TaskModel.Id);
-            });
+            var tempData = _TempDataAppService.GetTempDataByTaskId(DllTask.SystemRuntimeInfo.TaskModel.Id);
+            var json = tempData.DataJson;
             if (string.IsNullOrEmpty(json))
             {
                 return null;
@@ -67,65 +74,23 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
 
         public void UpdateLastStartTime(DateTime time)
         {
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            {
-                var taskDal = new TaskDal();
-                taskDal.UpdateLastStartTime(c, DllTask.SystemRuntimeInfo.TaskModel.Id, time);
-            });
+            _TaskAppService.UpdateLastStartTime(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
         }
 
         public void UpdateLastEndTime(DateTime time)
         {
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            {
-                var taskDal = new TaskDal();
-                taskDal.UpdateLastEndTime(c, DllTask.SystemRuntimeInfo.TaskModel.Id, time);
-            });
+            _TaskAppService.UpdateLastEndTime(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
         }
+
 
         public void UpdateTaskError(DateTime time)
         {
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            {
-                var taskDal = new TaskDal();
-                taskDal.UpdateTaskError(c, DllTask.SystemRuntimeInfo.TaskModel.Id, time);
-            });
+            _TaskAppService.UpdateTaskError(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
         }
 
         public void UpdateTaskSuccess()
         {
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            {
-                var taskDal = new TaskDal();
-                taskDal.UpdateTaskSuccess(c, DllTask.SystemRuntimeInfo.TaskModel.Id);
-            });
-        }
-
-        public void AddLog(LogModel model)
-        {
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            {
-                var logDal = new LogDal();
-                model.Msg = model.Msg.SubString2(1000);
-                logDal.Add(c, model);
-            });
-        }
-
-        public void AddError(ErrorModel model)
-        {
-            AddLog(new LogModel()
-            {
-                CreationTime = model.CreationTime,
-                LogType = model.ErrorType,
-                Msg = model.Msg,
-                TaskId = model.TaskId
-            });
-            SqlHelper.ExcuteSql(DllTask.SystemRuntimeInfo.TaskConnectString, (c) =>
-            {
-                var errorDal = new ErrorDal();
-                model.Msg = model.Msg.SubString2(1000);
-                errorDal.Add(c, model);
-            });
+            _TaskAppService.UpdateTaskSuccess(DllTask.SystemRuntimeInfo.TaskModel.Id);
         }
     }
 }

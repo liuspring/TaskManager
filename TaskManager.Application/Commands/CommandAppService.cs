@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Abp.Authorization;
 using Abp.AutoMapper;
 using Abp.Domain.Repositories;
-using Castle.Windsor.Configuration.Interpreters.XmlProcessor.ElementProcessors;
-using TaskManager.Authorization;
 using TaskManager.Commands.Dto;
 
 namespace TaskManager.Commands
 {
-    [AbpAuthorize(PermissionNames.Pages_Users)]
     public class CommandAppService : TaskManagerAppServiceBase, ICommandAppService
     {
 
@@ -59,6 +55,26 @@ namespace TaskManager.Commands
             if (!string.IsNullOrEmpty(input.CommandName))
                 commands = commands.Where(a => a.CommandName == input.CommandName);
             return commands.Count();
+        }
+
+        /// <summary>
+        /// 返回当前最大值
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxCommandId()
+        {
+            return _commandRepository.GetAll().Max(a => a.Id);
+        }
+
+        public List<Command> GetCommands(int nodeId, int lastMaxId)
+        {
+            return _commandRepository.GetAll().Where(a => a.NodeId == nodeId && a.Id > lastMaxId).ToList();
+        }
+
+        public void UpdateStateById(int id, byte state)
+        {
+            var command = _commandRepository.Get(id);
+            command.CommandState = state;
         }
     }
 }

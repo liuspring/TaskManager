@@ -1,7 +1,13 @@
 ﻿using System;
-using TaskManager.Node.Model;
+using Abp;
+using Abp.Dependency;
+using Castle.Facilities.Logging;
+using TaskManager.Logs.Dto;
 using TaskManager.Node.TaskManager.OpenOperator;
 using TaskManager.Node.TaskManager.SystemRuntime;
+using TaskManager.Node.Tools;
+using TaskManager.Tasks;
+using TaskManager.TempDatas;
 
 namespace TaskManager.Node.TaskManager
 {
@@ -36,9 +42,13 @@ namespace TaskManager.Node.TaskManager
         /// </summary>
         public TaskSafeDisposeOperator SafeDisposeOperator;
 
+        //private readonly ITaskAppService _TaskAppService1;
+        //private readonly ITempDataAppService _TempDataAppService1;
 
         public BaseDllTask()
         {
+            //_TaskAppService = IocManager.Instance.Resolve<ITaskAppService>();
+            //_TempDataAppService = IocManager.Instance.Resolve<ITempDataAppService>();
             SystemRuntimeOperator = new TaskSystemRuntimeOperator(this);
             OpenOperator = new TaskOpenOperator(this);
         }
@@ -65,26 +75,13 @@ namespace TaskManager.Node.TaskManager
                 Run();
                 SystemRuntimeOperator.UpdateLastEndTime(DateTime.Now);
                 SystemRuntimeOperator.UpdateTaskSuccess();
-                SystemRuntimeOperator.AddLog(new LogModel
-                {
-                    Msg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】执行完毕",
-                    TaskId = SystemRuntimeInfo.TaskModel.Id,
-                    LogType = (byte)EnumTaskLogType.SystemLog,
-                    CreationTime = DateTime.Now,
-                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
-                });
+                var logMsg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】执行完毕";
+                LogHelper.AddTaskLog(logMsg, SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.SystemLog);
             }
-            catch (Exception exp)
+            catch (Exception ex)
             {
                 SystemRuntimeOperator.UpdateTaskError(DateTime.Now);
-                SystemRuntimeOperator.AddError(new ErrorModel
-                {
-                    Msg = ("错误:" + exp.Message + " 堆栈:" + exp.StackTrace),
-                    TaskId = SystemRuntimeInfo.TaskModel.Id,
-                    ErrorType = (byte)EnumTaskLogType.SystemError,
-                    CreationTime = DateTime.Now,
-                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
-                });
+                LogHelper.AddTaskError("任务运行错误", SystemRuntimeInfo.TaskModel.Id, ex, (byte)EnumTaskLogType.SystemError);
             }
         }
 
@@ -110,23 +107,11 @@ namespace TaskManager.Node.TaskManager
             if (SafeDisposeOperator != null)
             {
                 SafeDisposeOperator.DisposedState = TaskDisposedState.Disposing;
-                SystemRuntimeOperator.AddLog(new LogModel
-                {
-                    Msg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已设置资源释放状态(Disposing),并等待任务安全终止信号",
-                    TaskId = SystemRuntimeInfo.TaskModel.Id,
-                    LogType = (byte)EnumTaskLogType.SystemLog,
-                    CreationTime = DateTime.Now,
-                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
-                });
+                var logMsg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已设置资源释放状态(Disposing),并等待任务安全终止信号";
+                LogHelper.AddTaskLog(logMsg, SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.SystemLog);
                 SafeDisposeOperator.WaitDisposeFinished();
-                SystemRuntimeOperator.AddLog(new LogModel
-                {
-                    Msg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已安全终止结束",
-                    TaskId = SystemRuntimeInfo.TaskModel.Id,
-                    LogType = (byte)EnumTaskLogType.SystemLog,
-                    CreationTime = DateTime.Now,
-                    NodeId = SystemRuntimeInfo.TaskModel.NodeId
-                });
+                logMsg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已安全终止结束";
+                LogHelper.AddTaskLog(logMsg, SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.SystemLog);
             }
         }
     }

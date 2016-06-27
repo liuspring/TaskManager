@@ -16,7 +16,7 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
         /// <summary>
         /// 任务数据库连接字符串
         /// </summary>
-        public string TaskConnectString { get; set; }
+        //public string TaskConnectString { get; set; }
         /// <summary>
         /// 任务信息
         /// </summary>
