@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using TaskManager.Node.TaskManager;
 using TaskManager.Node.TaskManager.SystemRuntime;
 
@@ -13,6 +14,14 @@ namespace TaskManager.Demo
         /// </summary>
         public override void Run()
         {
+            var fs = new FileStream("E:\\ak.txt", FileMode.Append);
+            //获得字节数组
+            byte[] data = System.Text.Encoding.Default.GetBytes("Hello World2!");
+            //开始写入
+            fs.Write(data, 0, data.Length);
+            //清空缓冲区、关闭流
+            fs.Flush();
+            fs.Close();
             /* 
              * this.OpenOperator 用于任务调度平台提供给第三方使用的所有api接口封装
              */
@@ -63,6 +72,14 @@ namespace TaskManager.Demo
         /// </summary>
         public override void TestRun()
         {
+            var fs = new FileStream("E:\\ak.txt", FileMode.Append);
+            //获得字节数组
+            byte[] data = System.Text.Encoding.Default.GetBytes("Hello World1!");
+            //开始写入
+            fs.Write(data, 0, data.Length);
+            //清空缓冲区、关闭流
+            fs.Flush();
+            fs.Close();
             /*测试环境下任务的配置信息需要手工填写,正式环境下需要配置在任务配置中心里面*/
             this.AppConfig = new TaskAppConfigInfo();
             this.AppConfig.Add("sendmailhost", "smtp.163.com");

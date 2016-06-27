@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TaskManager.Nodes;
@@ -8,6 +9,7 @@ namespace TaskManager.Commands
 {
     [Table("qrtz_command")]
     [Description("任务命令表")]
+    [Serializable]
 
     public class Command : BaseEntity
     {

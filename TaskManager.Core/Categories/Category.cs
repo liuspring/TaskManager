@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,7 @@ namespace TaskManager.Categories
 {
     [Table("qrtz_category")]
     [Description("任务分类表")]
+    [Serializable]
     public class Category : BaseEntity
     {
         [Required]

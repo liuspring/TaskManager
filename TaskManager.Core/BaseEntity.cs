@@ -5,6 +5,7 @@ using Abp.Domain.Entities.Auditing;
 
 namespace TaskManager
 {
+    [Serializable]
     public abstract class BaseEntity : FullAuditedEntity
     {
         [Column("id")]

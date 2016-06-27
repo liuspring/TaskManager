@@ -8,6 +8,7 @@ namespace TaskManager.Tasks
 {
     [Table("qrtz_task")]
     [Description("任务表")]
+    [Serializable]
 
     public class Task : BaseEntity
     {

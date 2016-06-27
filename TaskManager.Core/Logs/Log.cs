@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,7 @@ namespace TaskManager.Logs
 {
     [Table("qrtz_log")]
     [Description("一般日志表")]
+    [Serializable]
     public class Log : BaseEntity
     {
 

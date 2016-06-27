@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TaskManager.Tasks;
@@ -8,6 +9,7 @@ namespace TaskManager.TempDatas
 {
     [Table("qrtz_temp_data")]
     [Description("任务数据库中的临时数据表")]
+    [Serializable]
     public class TempData : BaseEntity
     {
 

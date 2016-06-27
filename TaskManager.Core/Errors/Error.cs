@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TaskManager.Nodes;
@@ -8,6 +9,7 @@ namespace TaskManager.Errors
 {
     [Table("qrtz_error")]
     [Description("错误日志表")]
+    [Serializable]
     public class Error : BaseEntity
     {
 

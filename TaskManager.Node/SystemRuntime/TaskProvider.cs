@@ -52,7 +52,7 @@ namespace TaskManager.Node.SystemRuntime
             string fileInstallMainClassDllPath = fileInstallPath + @"\" + taskRuntimeInfo.TaskModel.MainClassDllFileName;
             string taskShareDllDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskSharedDllsDir;
 
-            IoHelper.CreateDirectory(fileLocalCachePath);
+            //IoHelper.CreateDirectory(fileLocalCachePath);
             IoHelper.CreateDirectory(fileInstallPath);
             File.WriteAllBytes(fileLocalCachePath, taskRuntimeInfo.TaskVersionModel.ZipFile);
 
@@ -64,11 +64,14 @@ namespace TaskManager.Node.SystemRuntime
                 var dllTask = new AppDomainLoader<BaseDllTask>().Load(fileInstallMainClassDllPath,
                     taskRuntimeInfo.TaskModel.MainClassNameSpace,
                     out taskRuntimeInfo.Domain);
-                dllTask.SystemRuntimeInfo = new TaskSystemRuntimeInfo()
-                {
-                    //TaskConnectString = GlobalConfig.TaskDataBaseConnectString,
-                    TaskModel = taskRuntimeInfo.TaskModel
-                };
+
+                var taskSystemRuntimeInfo=new TaskSystemRuntimeInfo();
+                taskSystemRuntimeInfo.TaskModel = taskRuntimeInfo.TaskModel;
+                //dllTask.SystemRuntimeInfo = new TaskSystemRuntimeInfo()
+                //{
+                //    //TaskConnectString = GlobalConfig.TaskDataBaseConnectString,
+                //    TaskModel = taskRuntimeInfo.TaskModel
+                //};
 
                 dllTask.AppConfig = new TaskAppConfigInfo();
                 if (!string.IsNullOrEmpty(taskRuntimeInfo.TaskModel.AppConfigJson))

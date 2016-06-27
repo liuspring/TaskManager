@@ -9,6 +9,7 @@ namespace TaskManager.Versions
 {
     [Table("qrtz_version_info")]
     [Description("任务版本库")]
+    [Serializable]
     public class VersionInfo : BaseEntity
     {
 

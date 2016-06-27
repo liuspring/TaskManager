@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TaskManager.Nodes;
@@ -8,6 +9,7 @@ namespace TaskManager.Performances
 {
     [Table("qrtz_performance")]
     [Description("节点和任务性能记录表")]
+    [Serializable]
     public class Performance : BaseEntity
     {
 

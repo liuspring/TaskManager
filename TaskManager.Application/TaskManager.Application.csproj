@@ -154,6 +154,7 @@
     <Compile Include="Users\UserAppService.cs" />
     <Compile Include="Users\Dto\UserListDto.cs" />
     <Compile Include="Versions\IVersionInfoService.cs" />
+    <Compile Include="Versions\VersionInfoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TaskManager.Nodes
 {
     [Table("qrtz_node")]
+    [Serializable]
     public class Node : BaseEntity
     {
         [Column("id")]
