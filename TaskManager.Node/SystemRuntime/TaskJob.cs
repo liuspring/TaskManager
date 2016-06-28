@@ -14,9 +14,7 @@ namespace TaskManager.Node.SystemRuntime
         {
             try
             {
-                //int taskid = Convert.ToInt32(context.JobDetail.Key);
-                JobKey key = context.JobDetail.Key;
-                int taskid = context.JobDetail.Key.ToInt();
+                int taskid = context.JobDetail.Key.Name.ToInt();
                 var taskruntimeinfo = TaskPoolManager.CreateInstance().Get(taskid.ToString());
                 if (taskruntimeinfo == null || taskruntimeinfo.DllTask == null)
                 {

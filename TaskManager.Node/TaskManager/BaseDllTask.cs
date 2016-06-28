@@ -1,13 +1,7 @@
 ﻿using System;
-using Abp;
-using Abp.Dependency;
-using Castle.Facilities.Logging;
-using TaskManager.Logs.Dto;
 using TaskManager.Node.TaskManager.OpenOperator;
 using TaskManager.Node.TaskManager.SystemRuntime;
 using TaskManager.Node.Tools;
-using TaskManager.Tasks;
-using TaskManager.TempDatas;
 
 namespace TaskManager.Node.TaskManager
 {
@@ -42,18 +36,11 @@ namespace TaskManager.Node.TaskManager
         /// </summary>
         public TaskSafeDisposeOperator SafeDisposeOperator;
 
-        //private readonly ITaskAppService _TaskAppService1;
-        //private readonly ITempDataAppService _TempDataAppService1;
-
         public BaseDllTask()
         {
-            //_TaskAppService = IocManager.Instance.Resolve<ITaskAppService>();
-            //_TempDataAppService = IocManager.Instance.Resolve<ITempDataAppService>();
             SystemRuntimeOperator = new TaskSystemRuntimeOperator(this);
             OpenOperator = new TaskOpenOperator(this);
         }
-
-
 
 
         /*忽略默认的对象租用行为，以便“在主机应用程序域运行时始终”将对象保存在内存中.   

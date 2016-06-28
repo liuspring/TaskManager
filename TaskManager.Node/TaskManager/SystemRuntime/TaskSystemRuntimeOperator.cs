@@ -1,13 +1,9 @@
 ﻿using System;
 using Abp.Dependency;
-using Abp.Logging;
 using Common;
-using TaskManager.Errors.Dto;
-using TaskManager.Logs.Dto;
 using TaskManager.Tasks;
 using TaskManager.TempDatas;
 using TaskManager.TempDatas.Dto;
-using LogHelper = TaskManager.Node.Tools.LogHelper;
 
 namespace TaskManager.Node.TaskManager.SystemRuntime
 {
@@ -32,8 +28,8 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
         public TaskSystemRuntimeOperator(BaseDllTask dlltask)
         {
             DllTask = dlltask;
-            //_TaskAppService = IocManager.Instance.Resolve<ITaskAppService>();
-            //_TempDataAppService = IocManager.Instance.Resolve<ITempDataAppService>();
+            _TaskAppService = IocManager.Instance.Resolve<ITaskAppService>();
+            _TempDataAppService = IocManager.Instance.Resolve<ITempDataAppService>();
         }
 
         public void SaveLocalTempData(object obj)

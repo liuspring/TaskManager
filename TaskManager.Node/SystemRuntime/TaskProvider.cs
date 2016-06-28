@@ -53,12 +53,12 @@ namespace TaskManager.Node.SystemRuntime
             string taskShareDllDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskSharedDllsDir;
 
             //IoHelper.CreateDirectory(fileLocalCachePath);
-            IoHelper.CreateDirectory(fileInstallPath);
-            File.WriteAllBytes(fileLocalCachePath, taskRuntimeInfo.TaskVersionModel.ZipFile);
+            //IoHelper.CreateDirectory(fileInstallPath);
+            //File.WriteAllBytes(fileLocalCachePath, taskRuntimeInfo.TaskVersionModel.ZipFile);
 
-            CompressHelper.UnCompress(fileLocalCachePath, fileInstallPath);
+            //CompressHelper.UnCompress(fileLocalCachePath, fileInstallPath);
             //拷贝共享程序集
-            IoHelper.CopyDirectory(taskShareDllDir, fileInstallPath);
+            //IoHelper.CopyDirectory(taskShareDllDir, fileInstallPath);
             try
             {
                 var dllTask = new AppDomainLoader<BaseDllTask>().Load(fileInstallMainClassDllPath,
