@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ICSharpCode.SharpZipLib.Zip;
 using SharpCompress.Archive;
 using SharpCompress.Common;
 using SharpCompress.Reader;
@@ -66,6 +67,11 @@ namespace Common
                     }
                 }
             }
+        }
+
+        public static void CreateZip(string zipFilePath)
+        {
+            ZipFile.Create(zipFilePath).Close();
         }
     }
 }

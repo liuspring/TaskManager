@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Task = TaskManager.Tasks.Task;
 
 namespace TaskManager.Node.TaskManager.SystemRuntime
 {
@@ -20,6 +15,6 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
         /// <summary>
         /// 任务信息
         /// </summary>
-        public Task TaskModel { get; set; }
+        public TaskModel TaskModel { get; set; }
     }
 }

@@ -191,6 +191,7 @@
     <Compile Include="TaskManager\SystemRuntime\EnumTaskLogType.cs" />
     <Compile Include="TaskManager\SystemRuntime\TaskAppConfigInfo.cs" />
     <Compile Include="TaskManager\SystemRuntime\TaskLock.cs" />
+    <Compile Include="TaskManager\SystemRuntime\TaskModel.cs" />
     <Compile Include="TaskManager\SystemRuntime\TaskSafeDisposeOperator.cs" />
     <Compile Include="TaskManager\SystemRuntime\TaskSystemRuntimeInfo.cs" />
     <Compile Include="TaskManager\SystemRuntime\TaskSystemRuntimeOperator.cs" />

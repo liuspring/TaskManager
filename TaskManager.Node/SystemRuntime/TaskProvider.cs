@@ -46,32 +46,33 @@ namespace TaskManager.Node.SystemRuntime
             };
             taskRuntimeInfo.TaskVersionModel = _versionInfoService.GetVersionInfo(taskid, taskRuntimeInfo.TaskModel.Version);
 
-            string fileLocalCachePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllCompressFileCacheDir + @"\" + taskRuntimeInfo.TaskModel.Id + @"\" + taskRuntimeInfo.TaskModel.Version + @"\" +
-                taskRuntimeInfo.TaskVersionModel.ZipFileName;
+            string fileLocalCachePath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" +
+                                        GlobalConfig.TaskDllCompressFileCacheDir + @"\" + taskRuntimeInfo.TaskModel.Id +
+                                        @"\" + taskRuntimeInfo.TaskModel.Version + @"\";
             string fileInstallPath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllDir + @"\" + taskRuntimeInfo.TaskModel.Id;
             string fileInstallMainClassDllPath = fileInstallPath + @"\" + taskRuntimeInfo.TaskModel.MainClassDllFileName;
             string taskShareDllDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskSharedDllsDir;
 
-            //IoHelper.CreateDirectory(fileLocalCachePath);
-            //IoHelper.CreateDirectory(fileInstallPath);
-            //File.WriteAllBytes(fileLocalCachePath, taskRuntimeInfo.TaskVersionModel.ZipFile);
+            IoHelper.CreateDirectory(fileLocalCachePath);
+            var zipFileLocalCachePath = fileLocalCachePath + taskRuntimeInfo.TaskVersionModel.ZipFileName;
+            CompressHelper.CreateZip(zipFileLocalCachePath);
+            IoHelper.CreateDirectory(fileInstallPath);
+            File.WriteAllBytes(zipFileLocalCachePath, taskRuntimeInfo.TaskVersionModel.ZipFile);
 
-            //CompressHelper.UnCompress(fileLocalCachePath, fileInstallPath);
+            CompressHelper.UnCompress(zipFileLocalCachePath, fileInstallPath);
             //拷贝共享程序集
-            //IoHelper.CopyDirectory(taskShareDllDir, fileInstallPath);
+            IoHelper.CopyDirectory(taskShareDllDir, fileInstallPath);
             try
             {
-                var dllTask = new AppDomainLoader<BaseDllTask>().Load(fileInstallMainClassDllPath,
+                 var dllTask = new AppDomainLoader<BaseDllTask>().Load(fileInstallMainClassDllPath,
                     taskRuntimeInfo.TaskModel.MainClassNameSpace,
                     out taskRuntimeInfo.Domain);
-
-                var taskSystemRuntimeInfo=new TaskSystemRuntimeInfo();
-                taskSystemRuntimeInfo.TaskModel = taskRuntimeInfo.TaskModel;
-                //dllTask.SystemRuntimeInfo = new TaskSystemRuntimeInfo()
-                //{
-                //    //TaskConnectString = GlobalConfig.TaskDataBaseConnectString,
-                //    TaskModel = taskRuntimeInfo.TaskModel
-                //};
+                var taskModel = new TaskModel();
+                PropertyHelper.Copy(taskRuntimeInfo, taskModel);
+                dllTask.SystemRuntimeInfo = new TaskSystemRuntimeInfo()
+                {
+                    TaskModel = taskModel
+                };
 
                 dllTask.AppConfig = new TaskAppConfigInfo();
                 if (!string.IsNullOrEmpty(taskRuntimeInfo.TaskModel.AppConfigJson))

@@ -1142,6 +1142,10 @@
     <Content Include="Views\Commands\Index.cshtml" />
     <Content Include="Views\Tasks\Index.cshtml" />
     <Content Include="Views\Tasks\Create.cshtml" />
+    <Content Include="UploadFile\201606241038553aaba.zip" />
+    <Content Include="UploadFile\2016062410414025ee0.zip" />
+    <Content Include="UploadFile\20160624104426afcd3.zip" />
+    <Content Include="UploadFile\20160628171518ac0cd.zip" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

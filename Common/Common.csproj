@@ -212,6 +212,7 @@
     <Compile Include="NpoiExcelHelper.cs" />
     <Compile Include="ObjHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyHelper.cs" />
     <Compile Include="RandomHelper.cs" />
     <Compile Include="ResourceCode.cs" />
     <Compile Include="Safe.cs" />
