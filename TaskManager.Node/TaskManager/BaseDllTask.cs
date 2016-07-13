@@ -60,16 +60,16 @@ namespace TaskManager.Node.TaskManager
             try
             {
                 IsTesting = false;
-                //SystemRuntimeOperator.UpdateLastStartTime(DateTime.Now);
+                SystemRuntimeOperator.UpdateLastStartTime(DateTime.Now);
                 Run();
-                //SystemRuntimeOperator.UpdateLastEndTime(DateTime.Now);
-                //SystemRuntimeOperator.UpdateTaskSuccess();
+                SystemRuntimeOperator.UpdateLastEndTime(DateTime.Now);
+                SystemRuntimeOperator.UpdateTaskSuccess();
                 var logMsg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】执行完毕";
                 LogHelper.AddTaskLog(logMsg, SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.SystemLog);
             }
             catch (Exception ex)
             {
-                //SystemRuntimeOperator.UpdateTaskError(DateTime.Now);
+                SystemRuntimeOperator.UpdateTaskError(DateTime.Now);
                 LogHelper.AddTaskError("任务运行错误", SystemRuntimeInfo.TaskModel.Id, ex, (byte)EnumTaskLogType.SystemError);
             }
           }

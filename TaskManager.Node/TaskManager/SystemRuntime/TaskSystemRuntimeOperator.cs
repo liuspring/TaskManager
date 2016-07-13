@@ -21,15 +21,15 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
         protected string Localtempdatafilename = "localtempdata.json.txt";
 
 
-        private readonly ITaskAppService _TaskAppService;
-        private readonly ITempDataAppService _TempDataAppService;
+        private readonly ITaskAppService _taskAppService;
+        private readonly ITempDataAppService _tempDataAppService;
 
 
         public TaskSystemRuntimeOperator(BaseDllTask dlltask)
         {
             DllTask = dlltask;
-            _TaskAppService = IocManager.Instance.Resolve<ITaskAppService>();
-            _TempDataAppService = IocManager.Instance.Resolve<ITempDataAppService>();
+            _taskAppService = IocManager.Instance.Resolve<ITaskAppService>();
+            _tempDataAppService = IocManager.Instance.Resolve<ITempDataAppService>();
         }
 
         public void SaveLocalTempData(object obj)
@@ -54,11 +54,11 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
                 TaskId = DllTask.SystemRuntimeInfo.TaskModel.Id,
                 DataJson = JsonHelper.Serialize(obj)
             };
-            _TempDataAppService.Create(tempData);
+            _tempDataAppService.Create(tempData);
         }
         public T GetDataBaseTempData<T>() where T : class
         {
-            var tempData = _TempDataAppService.GetTempDataByTaskId(DllTask.SystemRuntimeInfo.TaskModel.Id);
+            var tempData = _tempDataAppService.GetTempDataByTaskId(DllTask.SystemRuntimeInfo.TaskModel.Id);
             var json = tempData.DataJson;
             if (string.IsNullOrEmpty(json))
             {
@@ -70,23 +70,23 @@ namespace TaskManager.Node.TaskManager.SystemRuntime
 
         public void UpdateLastStartTime(DateTime time)
         {
-            _TaskAppService.UpdateLastStartTime(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
+            _taskAppService.UpdateLastStartTime(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
         }
 
         public void UpdateLastEndTime(DateTime time)
         {
-            _TaskAppService.UpdateLastEndTime(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
+            _taskAppService.UpdateLastEndTime(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
         }
 
 
         public void UpdateTaskError(DateTime time)
         {
-            _TaskAppService.UpdateTaskError(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
+            _taskAppService.UpdateTaskError(DllTask.SystemRuntimeInfo.TaskModel.Id, time);
         }
 
         public void UpdateTaskSuccess()
         {
-            _TaskAppService.UpdateTaskSuccess(DllTask.SystemRuntimeInfo.TaskModel.Id);
+            _taskAppService.UpdateTaskSuccess(DllTask.SystemRuntimeInfo.TaskModel.Id);
         }
     }
 }

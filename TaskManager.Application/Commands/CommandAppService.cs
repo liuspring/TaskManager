@@ -63,12 +63,12 @@ namespace TaskManager.Commands
         /// <returns></returns>
         public int GetMaxCommandId()
         {
-            return _commandRepository.GetAll().Max(a => a.Id);
+            return _commandRepository.GetAll().Where(a=>a.CommandState==0).Max(a => a.Id);
         }
 
         public List<Command> GetCommands(int nodeId, int lastMaxId)
         {
-            return _commandRepository.GetAll().Where(a => a.NodeId == nodeId && a.Id > lastMaxId).ToList();
+            return _commandRepository.GetAll().Where(a => a.NodeId == nodeId&&a.CommandState==0 && a.Id >= lastMaxId).ToList();
         }
 
         public void UpdateStateById(int id, byte state)

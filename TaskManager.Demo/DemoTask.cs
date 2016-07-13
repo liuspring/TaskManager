@@ -1,8 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using TaskManager.Node.TaskManager;
-using TaskManager.Node.TaskManager.SystemRuntime;
+﻿using System.IO;
+using TaskManager.BaseService;
 
 namespace TaskManager.Demo
 {
@@ -16,7 +13,7 @@ namespace TaskManager.Demo
         {
             var fs = new FileStream("E:\\ak.txt", FileMode.Append);
             //获得字节数组
-            byte[] data = System.Text.Encoding.Default.GetBytes("Hello World2!");
+            byte[] data = System.Text.Encoding.Default.GetBytes("Hello World!");
             //开始写入
             fs.Write(data, 0, data.Length);
             //清空缓冲区、关闭流

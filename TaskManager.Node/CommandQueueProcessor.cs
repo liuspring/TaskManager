@@ -6,6 +6,7 @@ using TaskManager.Enum;
 using TaskManager.Node.Commands;
 using TaskManager.Node.Tools;
 using TaskManager.Tasks;
+using XXF.Extensions;
 
 namespace TaskManager.Node
 {
@@ -113,6 +114,8 @@ namespace TaskManager.Node
                     {
                         try
                         {
+                            if (command != null)
+                                command.CommandName = System.Enum.GetName(typeof(EnumTaskCommandName), command.CommandName.Toint());
                             CommandFactory.Execute(command);
                             _CommandAppService.UpdateStateById(command.Id, (byte)EnumTaskCommandState.Success);
                             LogHelper.AddNodeLog(string.Format("当前节点执行命令成功! id:{0},命令名:{1},命令内容:{2}", command.Id, command.CommandName, command.CommandJson));

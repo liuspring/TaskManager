@@ -31,6 +31,11 @@
         });
 
         $modal.on('shown.bs.modal', function () {
+            $("#Id").val("");
+            $("#CommandName").val("");
+            $("#CommandJson").val("");
+            $("#TaskId").val("");
+            $("#NodeId").val("");
             $modal.find('input:not([type=hidden]):first').focus();
         });
 
