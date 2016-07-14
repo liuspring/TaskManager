@@ -1091,6 +1091,7 @@
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NodesController.cs" />
+    <Compile Include="Controllers\OpenApiController.cs" />
     <Compile Include="Controllers\Results\ChallengeResult.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />

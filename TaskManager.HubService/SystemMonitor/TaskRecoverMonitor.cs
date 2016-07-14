@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Abp.Dependency;
+using TaskManager.HubService.SystemRuntime;
 using TaskManager.HubService.Tools;
+using TaskManager.Nodes;
+using TaskManager.Tasks;
 
 namespace TaskManager.HubService.SystemMonitor
 {
@@ -13,6 +15,12 @@ namespace TaskManager.HubService.SystemMonitor
     /// </summary>
     public class TaskRecoverMonitor : BaseMonitor
     {
+        private readonly ITaskAppService _taskAppService;
+
+        public TaskRecoverMonitor()
+        {
+            _taskAppService = IocManager.Instance.Resolve<ITaskAppService>(); ;
+        }
         public override int Interval
         {
             get
@@ -25,41 +33,32 @@ namespace TaskManager.HubService.SystemMonitor
 
         protected override void Run()
         {
+            var tasks = _taskAppService.GetTasks(GlobalConfig.NodeId, (int)EnumTaskState.Stop);
+            var currentscantaskids = new List<int>();
+            foreach (var task in tasks)
+            {
+                try
+                {
+                    var taskruntimeinfo = TaskPoolManager.CreateInstance().Get(task.Id.ToString());
+                    if (taskruntimeinfo != null)
+                    {
+                        currentscantaskids.Add(task.Id);
+                    }
 
-
-            //List<int> taskids = new List<int>();
-            //SqlHelper.ExcuteSql(GlobalConfig.TaskDataBaseConnectString, (c) =>
-            //{
-            //    tb_task_dal taskdal = new tb_task_dal();
-            //    taskids = taskdal.GetTaskIDsByState(c, (int)EnumTaskState.Stop, GlobalConfig.NodeID);
-            //});
-            //List<int> currentscantaskids = new List<int>();
-            //foreach (var taskid in taskids)
-            //{
-            //    try
-            //    {
-            //        var taskruntimeinfo = TaskPoolManager.CreateInstance().Get(taskid.ToString());
-            //        if (taskruntimeinfo != null)
-            //        {
-            //            currentscantaskids.Add(taskid);
-            //        }
-
-            //        var recovertaskids = (from o in lastscantaskids
-            //                              from c in currentscantaskids
-            //                              where o == c
-            //                              select o).ToList();
-            //        if (recovertaskids != null && recovertaskids.Count > 0)
-            //            recovertaskids.ForEach((c) =>
-            //            {
-            //                LogHelper.AddTaskError("任务资源运行异常,可能需要手动卸载", taskid, new Exception("任务处于停止状态，但是相应集群节点中，发现任务存在在运行池中未释放"));
-            //            });
-            //        lastscantaskids = currentscantaskids;
-            //    }
-            //    catch (Exception exp)
-            //    {
-            //        LogHelper.AddNodeError("任务" + taskid + "资源回收出错", exp);
-            //    }
-            //}
+                    var recovertaskids = (from o in _lastscantaskids
+                                          from c in currentscantaskids
+                                          where o == c
+                                          select o).ToList();
+                    if (recovertaskids.Count > 0)
+                        recovertaskids.ForEach((c) => LogHelper.AddTaskError("任务资源运行异常,可能需要手动卸载", task.Id,
+                            new Exception("任务处于停止状态，但是相应集群节点中，发现任务存在在运行池中未释放")));
+                    _lastscantaskids = currentscantaskids;
+                }
+                catch (Exception exp)
+                {
+                    LogHelper.AddNodeError("任务" + task.Id + "资源回收出错", exp);
+                }
+            }
         }
     }
 }

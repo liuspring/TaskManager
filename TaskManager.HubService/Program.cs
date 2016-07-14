@@ -8,7 +8,7 @@ namespace TaskManager.HubService
 {
     static class Program
     {
-        private const bool IsService = true; //是否Windows服务
+        private const bool IsService = false; //是否Windows服务
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>

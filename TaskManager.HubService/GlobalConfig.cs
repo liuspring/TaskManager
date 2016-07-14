@@ -14,7 +14,7 @@ namespace TaskManager.HubService
         {
             get
             {
-                return ConfigurationManager.AppSettings["Default"];
+                return ConfigurationManager.ConnectionStrings["Default"].ToString();
             }
         }
 

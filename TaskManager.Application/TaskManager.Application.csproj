@@ -122,6 +122,10 @@
     <Compile Include="Nodes\Dto\NodeOutput.cs" />
     <Compile Include="Nodes\INodeAppService.cs" />
     <Compile Include="Nodes\NodeAppService.cs" />
+    <Compile Include="Performances\Dto\PerformanceInput.cs" />
+    <Compile Include="Performances\Dto\PerformanceOutput.cs" />
+    <Compile Include="Performances\IPerformanceAppService.cs" />
+    <Compile Include="Performances\PerformanceAppService.cs" />
     <Compile Include="TaskManagerApplicationModule.cs" />
     <Compile Include="TaskManagerAppServiceBase.cs" />
     <Compile Include="MultiTenancy\Dto\CreateTenantInput.cs" />

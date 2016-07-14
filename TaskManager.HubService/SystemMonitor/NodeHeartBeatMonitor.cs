@@ -1,4 +1,8 @@
 ﻿
+using Abp.Dependency;
+using TaskManager.Nodes;
+using TaskManager.Nodes.Dto;
+
 namespace TaskManager.HubService.SystemMonitor
 {
     /// <summary>
@@ -7,6 +11,7 @@ namespace TaskManager.HubService.SystemMonitor
     /// </summary>
     public class NodeHeartBeatMonitor : BaseMonitor
     {
+        private readonly INodeAppService _nodeAppService;
         public override int Interval
         {
             get
@@ -14,24 +19,35 @@ namespace TaskManager.HubService.SystemMonitor
                 return 5000;
             }
         }
+
+        public NodeHeartBeatMonitor()
+        {
+            _nodeAppService = IocManager.Instance.Resolve<INodeAppService>();
+        }
+
         protected override void Run()
         {
             // todo 更新并插入新的节点信息
-
-            //SqlHelper.ExcuteSql(GlobalConfig.TaskDataBaseConnectString, (c) =>
-            //{
-            //    var sqldatetime = c.GetServerDate();
-            //    tb_node_dal nodedal = new tb_node_dal();
-            //    nodedal.AddOrUpdate(c, new Domain.Model.tb_node_model()
-            //    {
-            //        nodecreatetime = sqldatetime,
-            //        nodeip = System.Net.Dns.GetHostName(),
-            //        nodelastupdatetime = sqldatetime,
-            //        nodename = "新增节点",
-            //        id = GlobalConfig.NodeID
-            //    });
-            //});
-
+            var node = _nodeAppService.GetNode(GlobalConfig.NodeId);
+            if (node == null)
+            {
+                var input = new NodeInput
+                {
+                    NodeIp = System.Net.Dns.GetHostName(),
+                    NodeName = "新增节点"
+                };
+                _nodeAppService.Create(input);
+            }
+            else
+            {
+                var input = new NodeInput
+                {
+                    Id = node.Id,
+                    NodeIp = System.Net.Dns.GetHostName(),
+                    NodeName = node.NodeName
+                };
+                _nodeAppService.Update(input);
+            }
         }
     }
 }

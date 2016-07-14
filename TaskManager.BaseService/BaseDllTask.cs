@@ -60,17 +60,17 @@ namespace TaskManager.BaseService
             try
             {
                 IsTesting = false;
-                SystemRuntimeOperator.UpdateLastStartTime(DateTime.Now);
+                SystemRuntimeOperator.UpdateLastStartTime();
                 Run();
-                SystemRuntimeOperator.UpdateLastEndTime(DateTime.Now);
+                SystemRuntimeOperator.UpdateLastEndTime();
                 SystemRuntimeOperator.UpdateTaskSuccess();
                 var logMsg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】执行完毕";
-                //LogHelper.AddTaskLog(logMsg, SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.SystemLog);
+                SystemRuntimeOperator.AddTaskLog(logMsg,(byte)EnumTaskLogType.SystemLog);
             }
             catch (Exception ex)
             {
-                SystemRuntimeOperator.UpdateTaskError(DateTime.Now);
-                //LogHelper.AddTaskError("任务运行错误", SystemRuntimeInfo.TaskModel.Id, ex, (byte)EnumTaskLogType.SystemError);
+                SystemRuntimeOperator.UpdateTaskError();
+                SystemRuntimeOperator.AddTaskError("任务运行错误",  ex, (byte)EnumTaskLogType.SystemError);
             }
         }
 
@@ -97,10 +97,10 @@ namespace TaskManager.BaseService
             {
                 SafeDisposeOperator.DisposedState = TaskDisposedState.Disposing;
                 var logMsg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已设置资源释放状态(Disposing),并等待任务安全终止信号";
-                //LogHelper.AddTaskLog(logMsg, SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.SystemLog);
+                SystemRuntimeOperator.AddTaskLog(logMsg, (byte)EnumTaskLogType.SystemLog);
                 SafeDisposeOperator.WaitDisposeFinished();
                 logMsg = "任务【" + SystemRuntimeInfo.TaskModel.TaskName + "】已安全终止结束";
-                //LogHelper.AddTaskLog(logMsg, SystemRuntimeInfo.TaskModel.Id, (byte)EnumTaskLogType.SystemLog);
+                SystemRuntimeOperator.AddTaskLog(logMsg,(byte)EnumTaskLogType.SystemError);
             }
         }
     }

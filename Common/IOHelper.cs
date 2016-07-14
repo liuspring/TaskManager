@@ -1,16 +1,26 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using System.Linq;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Common
 {
     public class IoHelper
     {
+        /// <summary>
+        /// 获取目录大小 递归
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        public static long DirSize(DirectoryInfo d)
+        {
+            // 所有文件大小.
+            FileInfo[] fis = d.GetFiles();
+            long size = fis.Sum(fi => fi.Length);
+            // 遍历出当前目录的所有文件夹.
+            DirectoryInfo[] dis = d.GetDirectories();
+            size += dis.Sum(di => DirSize(di));
+            return (size);
+        }
         public static void CopyDirectory(string srcDir, string tgtDir)
         {
             var info = new DirectoryInfo(srcDir);
@@ -26,14 +36,14 @@ namespace Common
                     info2.Create();
                 }
                 FileInfo[] files = info.GetFiles();
-                for (int i = 0; i < files.Length; i++)
+                foreach (FileInfo t in files)
                 {
-                    File.Copy(files[i].FullName, info2.FullName + @"\" + files[i].Name, true);
+                    File.Copy(t.FullName, info2.FullName + @"\" + t.Name, true);
                 }
                 DirectoryInfo[] directories = info.GetDirectories();
-                for (int j = 0; j < directories.Length; j++)
+                foreach (DirectoryInfo t in directories)
                 {
-                    CopyDirectory(directories[j].FullName, info2.FullName + @"\" + directories[j].Name);
+                    CopyDirectory(t.FullName, info2.FullName + @"\" + t.Name);
                 }
             }
         }

@@ -136,6 +136,7 @@
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -165,6 +166,10 @@
     <Compile Include="HubMain.Designer.cs">
       <DependentUpon>HubMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\ClientResult.cs" />
+    <Compile Include="Model\EnumTimeWatchLogType.cs" />
+    <Compile Include="Model\ParamBinds.cs" />
+    <Compile Include="Model\TimeWatchLogInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -190,6 +195,7 @@
     <Compile Include="SystemRuntime\TaskPoolManager.cs" />
     <Compile Include="SystemRuntime\TaskProvider.cs" />
     <Compile Include="TaskManagerNodeModule.cs" />
+    <Compile Include="Tools\ApiHelper.cs" />
     <Compile Include="Tools\AppDomainLoader.cs" />
     <Compile Include="Tools\LogHelper.cs" />
     <EmbeddedResource Include="HubMain.resx">

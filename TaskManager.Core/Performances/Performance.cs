@@ -39,5 +39,18 @@ namespace TaskManager.Performances
         [Column("install_dir_size")]
         [Description("应用大小")]
         public float InstallDirSize { get; set; }
+
+        public static Performance Create(int nodeId, int taskId, float cpu, float memory, float installDirSize)
+        {
+            var performance = new Performance
+            {
+                NodeId = nodeId,
+                TaskId = taskId,
+                Cpu = cpu,
+                Memory = memory,
+                InstallDirSize = installDirSize
+            };
+            return performance;
+        }
     }
 }

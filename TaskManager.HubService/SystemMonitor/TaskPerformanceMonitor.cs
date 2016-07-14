@@ -1,5 +1,10 @@
 ﻿using System;
+using System.IO;
+using Abp.Dependency;
+using Common;
 using TaskManager.HubService.Tools;
+using TaskManager.Performances;
+using TaskManager.Performances.Dto;
 
 namespace TaskManager.HubService.SystemMonitor
 {
@@ -9,6 +14,13 @@ namespace TaskManager.HubService.SystemMonitor
     /// </summary>
     public class TaskPerformanceMonitor : BaseMonitor
     {
+        private readonly IPerformanceAppService _performanceAppService;
+
+        public TaskPerformanceMonitor()
+        {
+            _performanceAppService = IocManager.Instance.Resolve<IPerformanceAppService>(); ;
+        }
+
         public override int Interval
         {
             get
@@ -18,48 +30,52 @@ namespace TaskManager.HubService.SystemMonitor
         }
         protected override void Run()
         {
-            //foreach (var taskruntimeinfo in TaskManager.Node.SystemRuntime.TaskPoolManager.CreateInstance().GetList())
-            //{
-            //    try
-            //    {
-            //        if (taskruntimeinfo == null)
-            //            continue;
-            //        string fileinstallpath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllDir + @"\" + taskruntimeinfo.TaskModel.id;
-            //        double dirsizeM = -1;
-            //        if (System.IO.Directory.Exists(fileinstallpath))
-            //        {
-            //            long dirsize = IOHelper.DirSize(new DirectoryInfo(fileinstallpath));
-            //            dirsizeM = (double)dirsize / 1024 / 1024;
-            //        }
-            //        try
-            //        {
-            //            if (taskruntimeinfo.Domain != null)
-            //            {
-            //                SqlHelper.ExcuteSql(GlobalConfig.TaskDataBaseConnectString, (c) =>
-            //                {
-            //                    tb_performance_dal nodedal = new tb_performance_dal();
-            //                    nodedal.AddOrUpdate(c, new Domain.Model.tb_performance_model()
-            //                    {
-            //                        cpu = taskruntimeinfo.Domain.MonitoringTotalProcessorTime.TotalSeconds,
-            //                        memory = (double)taskruntimeinfo.Domain.MonitoringSurvivedMemorySize / 1024 / 1024,
-            //                        installdirsize = dirsizeM,
-            //                        taskid = taskruntimeinfo.TaskModel.id,
-            //                        lastupdatetime = DateTime.Now,
-            //                        nodeid = GlobalConfig.NodeID
-            //                    });
-            //                });
-            //            }
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            LogHelper.AddTaskError("任务性能监控时出错", taskruntimeinfo.TaskModel.id, ex);
-            //        }
-            //    }
-            //    catch (Exception exp)
-            //    {
-            //        LogHelper.AddNodeError("任务性能监控者出错", exp);
-            //    }
-            //}
+            foreach (var taskruntimeinfo in SystemRuntime.TaskPoolManager.CreateInstance().GetList())
+            {
+                try
+                {
+                    if (taskruntimeinfo == null)
+                        continue;
+                    string fileinstallpath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\') + "\\" + GlobalConfig.TaskDllDir + @"\" + taskruntimeinfo.TaskModel.Id;
+                    double dirsizeM = -1;
+                    if (Directory.Exists(fileinstallpath))
+                    {
+                        long dirsize = IoHelper.DirSize(new DirectoryInfo(fileinstallpath));
+                        dirsizeM = (double)dirsize / 1024 / 1024;
+                    }
+                    try
+                    {
+                        if (taskruntimeinfo.Domain != null)
+                        {
+                            var input = new PerformanceInput
+                            {
+                                Cpu = (float)taskruntimeinfo.Domain.MonitoringTotalProcessorTime.TotalSeconds,
+                                Memory = taskruntimeinfo.Domain.MonitoringTotalAllocatedMemorySize / 1024 / 1024,
+                                InstallDirSize = (float)dirsizeM,
+                                TaskId = taskruntimeinfo.TaskModel.Id,
+                                NodeId = GlobalConfig.NodeId
+                            };
+                            var performance = _performanceAppService.GetPerformance(taskruntimeinfo.TaskModel.Id);
+                            if (performance == null)
+                            {
+                                _performanceAppService.Update(input);
+                            }
+                            else
+                            {
+                                _performanceAppService.Create(input);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.AddTaskError("任务性能监控时出错", taskruntimeinfo.TaskModel.Id, ex);
+                    }
+                }
+                catch (Exception exp)
+                {
+                    LogHelper.AddNodeError("任务性能监控者出错", exp);
+                }
+            }
         }
     }
 }

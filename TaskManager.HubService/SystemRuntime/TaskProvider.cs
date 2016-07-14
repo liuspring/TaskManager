@@ -61,9 +61,10 @@ namespace TaskManager.HubService.SystemRuntime
                    taskRuntimeInfo.TaskModel.MainClassNameSpace,
                    out taskRuntimeInfo.Domain);
                 var taskModel = new TaskModel();
-                PropertyHelper.Copy(taskRuntimeInfo, taskModel);
+                PropertyHelper.Copy(taskRuntimeInfo.TaskModel, taskModel);
                 dllTask.SystemRuntimeInfo = new TaskSystemRuntimeInfo()
                 {
+                    TaskConnectString = GlobalConfig.TaskDataBaseConnectString,
                     TaskModel = taskModel
                 };
 
