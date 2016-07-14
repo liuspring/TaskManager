@@ -122,3 +122,4 @@ UpgradeLog*.XML
 SendService/Properties/PublishProfiles/配置文件1.pubxml
 /MyBatis
 .vs/config/applicationhost.config
+/TaskManager.Web/UploadFile
