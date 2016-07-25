@@ -115,6 +115,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityFramework\SecondDbContext.cs" />
     <Compile Include="EntityFramework\TaskManagerDbContext.cs" />
     <Compile Include="EntityFramework\Repositories\TaskManagerRepositoryBase.cs" />
     <Compile Include="Migrations\201606200908385_InitialCreate.cs" />
@@ -127,6 +128,11 @@
     </Compile>
     <Compile Include="Migrations\AbpZeroDbMigrator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="SecondDbContext\201607250749277_Second.cs" />
+    <Compile Include="SecondDbContext\201607250749277_Second.Designer.cs">
+      <DependentUpon>201607250749277_Second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SecondDbContext\Configuration.cs" />
     <Compile Include="TaskManagerDataModule.cs" />
     <Compile Include="Migrations\SeedData\DefaultEditionsCreator.cs" />
     <Compile Include="Migrations\SeedData\DefaultLanguagesCreator.cs" />
@@ -154,6 +160,12 @@
     <EmbeddedResource Include="Migrations\201606231001064_CreateQrtzTable.resx">
       <DependentUpon>201606231001064_CreateQrtzTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SecondDbContext\201607250749277_Second.resx">
+      <DependentUpon>201607250749277_Second.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="READ.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

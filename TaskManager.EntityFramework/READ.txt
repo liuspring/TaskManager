@@ -1,0 +1,94 @@
+﻿
+在同一个项目，创建两个不同的DbContext ，和两个 migrations
+
+天道 摘自abp官方论坛  abp作者hikalkan提供
+ 
+I created 2 different DbContext and 2 different migrations in same project.
+See migration command reference: http://coding.abel.nu/2012/03/ef-migrat ... reference/
+
+I added a new connection string named 'Second':
+
+CODE: SELECT ALL
+    <add name="Default" connectionString="Server=localhost; Database=MultipleDbContextDemo; Trusted_Connection=True;" providerName="System.Data.SqlClient" />
+    <add name="Second" connectionString="Server=localhost; Database=MultipleDbContextDemoSecondDb; Trusted_Connection=True;" providerName="System.Data.SqlClient" />
+
+
+Then Added second db context:
+
+CODE: SELECT ALL
+    public class MySecondDbContext : AbpDbContext
+    {
+        public virtual IDbSet<Course> Courses { get; set; }
+
+        public MySecondDbContext()
+            : base("Second")
+        {
+            
+        }
+    }
+
+
+Then enabled migrations:
+
+CODE: SELECT ALL
+Enable-Migrations -MigrationsDirectory "MigrationsSecond" -ContextTypeName "MySecondDbContext"
+
+CODE:SELECT ALL
+Add-Migration Second -ConfigurationTypeName "TaskManager.SecondDbContext.Configuration"
+
+When using add-migration and update database, we use configuration type name, like:
+
+CODE: SELECT ALL
+Update-Database -ConfigurationTypeName "MultipleDbContextDemo.MigrationsSecond.Configuration"
+
+
+An application services both dbcontext (over 2 repositories):
+
+CODE: SELECT ALL
+    public class TestAppService : MultipleDbContextDemoAppServiceBase, ITestAppService
+    {
+        private readonly IRepository<Person> _persons;
+        private readonly IRepository<Course> _courseRepository;
+
+        public TestAppService(IRepository<Person> persons, IRepository<Course> courseRepository)
+        {
+            _persons = persons;
+            _courseRepository = courseRepository;
+        }
+
+        public List<string> GetFromFirstDb()
+        {
+            var peopleNames = _persons.GetAllList().Select(p => p.PersonName).ToList();
+            return peopleNames;
+        }
+
+        public List<string> GetFromSecondDb()
+        {
+            var courseNames =  _courseRepository.GetAllList().Select(p => p.CourseName).ToList();
+            return courseNames;
+        }
+
+        public List<string> GetFromBothDbs()
+        {
+            List<string> names = new List<string>();
+
+            var peopleNames = _persons.GetAllList().Select(p => p.PersonName).ToList();
+            names.AddRange(peopleNames);
+
+            var courseNames = _courseRepository.GetAllList().Select(p => p.CourseName).ToList();
+            names.AddRange(courseNames);
+
+            return names;
+        }
+    }
+
+注意：要启用分布式事务
+Note that: GetFromBothDbs() may not work. You should start Distributed Transaction Coordinator windows service..
+
+For details, see source codes. After downloading solution, first create 2 databases using following commands:
+
+Update-Database -ConfigurationTypeName "MultipleDbContextDemo.Migrations.Configuration"
+
+Update-Database -ConfigurationTypeName "MultipleDbContextDemo.MigrationsSecond.Configuration"
+
+I hope this help you.
