@@ -78,6 +78,18 @@ namespace TaskManager.Web
                         ))
                 ).AddItem(
                     new MenuItemDefinition(
+                        "迷失灵魂",
+                        new LocalizableString("迷失灵魂", TaskManagerConsts.LocalizationSourceName),
+                        url: "",
+                        icon: "fa fa-users"
+                        ).AddItem(new MenuItemDefinition(
+                        "分类列表",
+                        new LocalizableString("分类列表", TaskManagerConsts.LocalizationSourceName),
+                        url: "/users/index",
+                        icon: "fa fa-circle-o"
+                        ))
+                ).AddItem(
+                    new MenuItemDefinition(
                         "用户管理",
                         new LocalizableString("用户管理", TaskManagerConsts.LocalizationSourceName),
                         url: "",

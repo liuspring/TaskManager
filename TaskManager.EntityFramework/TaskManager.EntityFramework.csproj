@@ -115,9 +115,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityFramework\LoseYouDbContext.cs" />
     <Compile Include="EntityFramework\SecondDbContext.cs" />
     <Compile Include="EntityFramework\TaskManagerDbContext.cs" />
     <Compile Include="EntityFramework\Repositories\TaskManagerRepositoryBase.cs" />
+    <Compile Include="MigrationsLoseYou\201607260650296_InitCreate.cs" />
+    <Compile Include="MigrationsLoseYou\201607260650296_InitCreate.Designer.cs">
+      <DependentUpon>201607260650296_InitCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsLoseYou\Configuration.cs" />
     <Compile Include="Migrations\201606200908385_InitialCreate.cs" />
     <Compile Include="Migrations\201606200908385_InitialCreate.Designer.cs">
       <DependentUpon>201606200908385_InitialCreate.cs</DependentUpon>
@@ -154,6 +160,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="MigrationsLoseYou\201607260650296_InitCreate.resx">
+      <DependentUpon>201607260650296_InitCreate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606200908385_InitialCreate.resx">
       <DependentUpon>201606200908385_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
