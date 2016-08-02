@@ -8,6 +8,7 @@
 @using System.Web.Optimization
 @using Abp.Timing
 @using Abp.Web.Mvc.Extensions
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,6 +79,7 @@
     <script src="~/api/AbpServiceProxies/GetAll?v=@(Clock.Now.Ticks)"></script>
     <script src="~/AbpScripts/GetScripts?v=@(Clock.Now.Ticks)" type="text/javascript"></script>
     @RenderSection("scripts", required: false)
+    @using StackExchange.Profiling;
 </head>
 <body class="skin-black-light">
     <div class="wrapper">
@@ -151,5 +153,6 @@
             });
         })
     </script>
+    @MiniProfiler.RenderIncludes();
 </body>
 </html>
