@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Abp.AutoMapper;
+﻿using Abp.AutoMapper;
 using Common;
 using TaskManager.Enum;
+using TaskManager.Nodes.Dto;
+using TaskManager.Tasks.Dto;
 
 namespace TaskManager.Commands.Dto
 {
@@ -16,7 +13,15 @@ namespace TaskManager.Commands.Dto
 
         public string CommandName { get; set; }
 
-        public string SCommandName {
+        public TaskOutput Task { get; set; }
+
+        public string TaskName
+        {
+            get { return Task.TaskName; }
+        }
+
+        public string SCommandName
+        {
             get
             {
                 return
@@ -39,8 +44,11 @@ namespace TaskManager.Commands.Dto
             }
         }
 
-        public int NodeId { get; set; }
+        public NodeOutput Node { get; set; }
 
-        public int TaskId { get; set; }
+        public string NodeName
+        {
+            get { return Node.NodeName; }
+        }
     }
 }

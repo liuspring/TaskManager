@@ -13,13 +13,15 @@ namespace TaskManager.Errors
     public class Error : BaseEntity
     {
 
-
-
+        [ForeignKey("NodeId")]
+        public virtual Node Node { get; set; }
         [Required]
         [Column("node_id")]
         [Description("节点ID")]
         public int NodeId { get; set; }
 
+        [ForeignKey("TaskId")]
+        public virtual Task Task { get; set; }
 
         [Column("task_id")]
         [Description("任务ID")]

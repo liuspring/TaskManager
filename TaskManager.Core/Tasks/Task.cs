@@ -19,7 +19,7 @@ namespace TaskManager.Tasks
         public string TaskName { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Categories.Category Category { get; set; }
+        public virtual Categories.Category Category { get; set; }
 
         [Required]
         [Column("category_id")]
@@ -32,7 +32,7 @@ namespace TaskManager.Tasks
         public int CmdState { get; set; }
 
         [ForeignKey("NodeId")]
-        public Nodes.Node Node { get; set; }
+        public virtual Nodes.Node Node { get; set; }
 
         [Required]
         [Column("node_id")]
@@ -98,7 +98,6 @@ namespace TaskManager.Tasks
         [Description("备注")]
         public string Remark { get; set; }
 
-
         /// <summary>
         /// 任务命令集合
         /// </summary>
@@ -122,6 +121,18 @@ namespace TaskManager.Tasks
         /// </summary>
         [ForeignKey("TaskId")]
         public virtual ICollection<Versions.VersionInfo> Versions { get; protected set; }
+
+        /// <summary>
+        /// 一般日志集合
+        /// </summary>
+        [ForeignKey("TaskId")]
+        public virtual ICollection<Logs.Log> Logs { get; protected set; }
+
+        /// <summary>
+        /// 错误日志集合
+        /// </summary>
+        [ForeignKey("TaskId")]
+        public virtual ICollection<Errors.Error> Errors { get; protected set; }
 
         public static Task Create(string taskName, int categoryId, int nodeId, byte state,
             int version, string appConfigJson, string cron, string mainClassDllFileName, string mainClassNameSpace, string remark)

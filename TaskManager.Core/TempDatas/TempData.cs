@@ -14,7 +14,7 @@ namespace TaskManager.TempDatas
     {
 
         [ForeignKey("TaskId")]
-        public Task Task { get; set; }
+        public virtual Task Task { get; set; }
 
         [Column("task_id")]
         [Description("任务ID")]

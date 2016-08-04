@@ -73,7 +73,7 @@ namespace TaskManager.HubService.Tools
             {
                 LogType = (byte)EnumTaskLogType.SystemLog,
                 Msg = msg,
-                TaskId = 0,
+                TaskId = 1,
                 NodeId = GlobalConfig.NodeId
             };
 

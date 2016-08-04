@@ -111,9 +111,15 @@
     <Compile Include="DataTablesRequest.cs" />
     <Compile Include="DataTablesResponse.cs" />
     <Compile Include="Errors\Dto\ErrorInput.cs" />
+    <Compile Include="Errors\Dto\ErrorListInput.cs" />
+    <Compile Include="Errors\Dto\ErrorListOutput.cs" />
+    <Compile Include="Errors\Dto\ErrorOutput.cs" />
     <Compile Include="Errors\ErrorAppService.cs" />
     <Compile Include="Errors\IErrorAppService.cs" />
     <Compile Include="Logs\Dto\LogInput.cs" />
+    <Compile Include="Logs\Dto\LogListInput.cs" />
+    <Compile Include="Logs\Dto\LogListOutput.cs" />
+    <Compile Include="Logs\Dto\LogOutput.cs" />
     <Compile Include="Logs\ILogAppService.cs" />
     <Compile Include="Logs\LogAppService.cs" />
     <Compile Include="Nodes\Dto\NodeInput.cs" />

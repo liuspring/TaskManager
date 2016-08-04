@@ -21,7 +21,7 @@ namespace TaskManager.HubService.Tools
         {
             byte[] byteArray = encode.GetBytes(data);
 
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(new Uri(weburl));
+            var webRequest = (HttpWebRequest)WebRequest.Create(new Uri(weburl));
             webRequest.Method = "POST";
             webRequest.Accept = "application/xml";
             webRequest.ContentType = "application/json";
@@ -40,7 +40,11 @@ namespace TaskManager.HubService.Tools
                     str = aspx.ReadToEnd();
                 }
             }
-            return str;
+            var clientResult = new ClientResult
+            {
+                ResString = str
+            };
+            return clientResult;
         }
 
         public static long GetTimeStamp(DateTime dateTime)

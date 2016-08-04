@@ -16,7 +16,7 @@
                 nodeService.create(node).done(function () {
                     grid.submitFilter();
                     $modal.modal("hide");
-                }).always(function() {
+                }).always(function () {
                     abp.ui.clearBusy($modal);
                 });
             } else {
@@ -29,7 +29,7 @@
             }
 
         });
-        
+
         $modal.on('shown.bs.modal', function () {
             $modal.find('input:not([type=hidden]):first').focus();
         });
@@ -41,7 +41,7 @@
                 $("#Id").val(data.id);
                 $("#NodeName").val(data.nodeName);
                 $("#NodeIp").val(data.nodeIp);
-                
+
             });
         });
 
@@ -75,6 +75,12 @@
                             return me.settings._iDisplayStart + me.row + 1;
                         },
                         "targets": 0
+                    },
+                    {
+                        "render": function (data, type, row, me) {
+                            return data ? "运行" : "停止";
+                        },
+                        "targets": 4
                     },
                     {
                         "render": function (data, type, row, me) {

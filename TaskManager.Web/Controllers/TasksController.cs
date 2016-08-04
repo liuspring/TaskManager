@@ -8,6 +8,7 @@ using TaskManager.Nodes;
 using TaskManager.Tasks;
 using TaskManager.Tasks.Dto;
 using Common;
+using StackExchange.Profiling;
 
 namespace TaskManager.Web.Controllers
 {
@@ -42,6 +43,7 @@ namespace TaskManager.Web.Controllers
             };
             var count = _taskAppService.GetListTotal(input);
             var result = count == 0 ? new List<TaskListOutput>() : _taskAppService.GetList(input);
+
             var response = new DataTablesResponse
             {
                 recordsTotal = count,

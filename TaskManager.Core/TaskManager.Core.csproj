@@ -100,7 +100,6 @@
     <Compile Include="LoseYou\Videos.cs" />
     <Compile Include="Nodes\Node.cs" />
     <Compile Include="Performances\Performance.cs" />
-    <Compile Include="Seconds\Second.cs" />
     <Compile Include="TaskManagerConsts.cs" />
     <Compile Include="TaskManagerCoreModule.cs" />
     <Compile Include="Authorization\TaskManagerAuthorizationProvider.cs" />

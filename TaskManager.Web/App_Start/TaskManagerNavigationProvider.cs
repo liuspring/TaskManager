@@ -14,40 +14,6 @@ namespace TaskManager.Web
     {
         public override void SetNavigation(INavigationProviderContext context)
         {
-            //context.Manager.MainMenu
-            //    .AddItem(
-            //        new MenuItemDefinition(
-            //            "Home",
-            //            L("HomePage"),
-            //            url: "",
-            //            icon: "fa fa-home",
-            //            requiresAuthentication: true
-            //            )
-            //    ).AddItem(
-            //        new MenuItemDefinition(
-            //            "Tenants",
-            //            L("Tenants"),
-            //            url: "Tenants",
-            //            icon: "fa fa-globe",
-            //            requiredPermissionName: PermissionNames.Pages_Tenants
-            //            )
-            //    ).AddItem(
-            //        new MenuItemDefinition(
-            //            "Users",
-            //            L("Users"),
-            //            url: "Users",
-            //            icon: "fa fa-users",
-            //            requiredPermissionName: PermissionNames.Pages_Users
-            //            )
-            //    ).AddItem(
-            //        new MenuItemDefinition(
-            //            "About",
-            //            L("About"),
-            //            url: "About",
-            //            icon: "fa fa-info"
-            //            )
-            //    );
-
             context.Manager.MainMenu
                 .AddItem(
                     new MenuItemDefinition(
@@ -72,8 +38,25 @@ namespace TaskManager.Web
                         icon: "fa fa-circle-o"
                         )).AddItem(new MenuItemDefinition(
                         "节点管理",
-                        new LocalizableString("Events", TaskManagerConsts.LocalizationSourceName),
+                        new LocalizableString("节点管理", TaskManagerConsts.LocalizationSourceName),
                         url: "/nodes/index",
+                        icon: "fa fa-circle-o"
+                        ))
+                ).AddItem(
+                    new MenuItemDefinition(
+                        "日志查看",
+                        new LocalizableString("日志查看", TaskManagerConsts.LocalizationSourceName),
+                        url: "",
+                        icon: "fa fa-users"
+                        ).AddItem(new MenuItemDefinition(
+                        "一般日志",
+                        new LocalizableString("一般日志", TaskManagerConsts.LocalizationSourceName),
+                        url: "/logs/index",
+                        icon: "fa fa-circle-o"
+                        )).AddItem(new MenuItemDefinition(
+                        "错误日志",
+                        new LocalizableString("错误日志", TaskManagerConsts.LocalizationSourceName),
+                        url: "/errors/index",
                         icon: "fa fa-circle-o"
                         ))
                 ).AddItem(

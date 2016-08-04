@@ -1074,6 +1074,8 @@
     <Content Include="Views\Account\Register.js" />
     <Content Include="Views\Categories\index.js" />
     <Content Include="Views\Commands\Index.js" />
+    <Content Include="Views\Errors\Index.js" />
+    <Content Include="Views\Logs\Index.js" />
     <Content Include="Views\Nodes\Index.js" />
     <Content Include="Views\Tasks\Create.js" />
     <Content Include="Views\Tasks\Index.js" />
@@ -1097,7 +1099,9 @@
     <Compile Include="Controllers\AdminLteController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\NodesController.cs" />
     <Compile Include="Controllers\OpenApiController.cs" />
     <Compile Include="Controllers\Results\ChallengeResult.cs" />
@@ -1155,6 +1159,8 @@
     <Content Include="UploadFile\2016062410414025ee0.zip" />
     <Content Include="UploadFile\20160624104426afcd3.zip" />
     <Content Include="UploadFile\20160628171518ac0cd.zip" />
+    <Content Include="Views\Logs\Index.cshtml" />
+    <Content Include="Views\Errors\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

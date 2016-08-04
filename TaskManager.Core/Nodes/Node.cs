@@ -37,10 +37,8 @@ namespace TaskManager.Nodes
         [ForeignKey("NodeId")]
         public virtual ICollection<Commands.Command> Commands { get; protected set; }
 
-
-
         /// <summary>
-        /// 一般日志集合
+        /// 一般性能集合
         /// </summary>
         [ForeignKey("NodeId")]
         public virtual ICollection<Performances.Performance> Performances { get; protected set; }

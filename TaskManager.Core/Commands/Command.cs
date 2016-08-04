@@ -32,7 +32,7 @@ namespace TaskManager.Commands
         public byte CommandState { get; set; }
 
         [ForeignKey("NodeId")]
-        public Node Node { get; set; }
+        public virtual Node Node { get; set; }
 
         [Required]
         [Column("node_id")]
@@ -40,7 +40,7 @@ namespace TaskManager.Commands
         public int NodeId { get; set; }
 
         [ForeignKey("TaskId")]
-        public Task Task { get; set; }
+        public virtual Task Task { get; set; }
 
         [Column("task_id")]
         [Description("任务ID")]

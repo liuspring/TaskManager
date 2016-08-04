@@ -116,7 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityFramework\LoseYouDbContext.cs" />
-    <Compile Include="EntityFramework\SecondDbContext.cs" />
     <Compile Include="EntityFramework\TaskManagerDbContext.cs" />
     <Compile Include="EntityFramework\Repositories\TaskManagerRepositoryBase.cs" />
     <Compile Include="MigrationsLoseYou\201607260650296_InitCreate.cs" />
@@ -132,13 +131,12 @@
     <Compile Include="Migrations\201606231001064_CreateQrtzTable.Designer.cs">
       <DependentUpon>201606231001064_CreateQrtzTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608040304304_UpdateData.cs" />
+    <Compile Include="Migrations\201608040304304_UpdateData.Designer.cs">
+      <DependentUpon>201608040304304_UpdateData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AbpZeroDbMigrator.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="SecondDbContext\201607250749277_Second.cs" />
-    <Compile Include="SecondDbContext\201607250749277_Second.Designer.cs">
-      <DependentUpon>201607250749277_Second.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SecondDbContext\Configuration.cs" />
     <Compile Include="TaskManagerDataModule.cs" />
     <Compile Include="Migrations\SeedData\DefaultEditionsCreator.cs" />
     <Compile Include="Migrations\SeedData\DefaultLanguagesCreator.cs" />
@@ -169,8 +167,8 @@
     <EmbeddedResource Include="Migrations\201606231001064_CreateQrtzTable.resx">
       <DependentUpon>201606231001064_CreateQrtzTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SecondDbContext\201607250749277_Second.resx">
-      <DependentUpon>201607250749277_Second.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608040304304_UpdateData.resx">
+      <DependentUpon>201608040304304_UpdateData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
