@@ -10,7 +10,7 @@ namespace TaskManager.HubService
         {
             InitializeComponent();
             this.ShowInTaskbar = false;
-            this.WindowState = FormWindowState.Minimized;
+           // this.WindowState = FormWindowState.Minimized;
         }
 
         private void HubMain_Load(object sender, EventArgs e)

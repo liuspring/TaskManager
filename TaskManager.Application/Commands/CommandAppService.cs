@@ -2,6 +2,7 @@
 using System.Linq;
 using Abp.AutoMapper;
 using Abp.Domain.Repositories;
+using Common;
 using TaskManager.Commands.Dto;
 
 namespace TaskManager.Commands
@@ -63,7 +64,10 @@ namespace TaskManager.Commands
         /// <returns></returns>
         public int GetMaxCommandId()
         {
-            return _commandRepository.GetAll().Where(a=>a.CommandState==0).Max(a => a.Id);
+            var commands = _commandRepository.GetAll().Where(a => a.CommandState == 0);
+            if (commands.Any())
+                return commands.Max(a => a.Id);
+            return 0;
         }
 
         public List<Command> GetCommands(int nodeId, int lastMaxId)

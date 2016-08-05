@@ -95,7 +95,7 @@ namespace TaskManager.HubService.Tools
             {
                 ErrorType = (byte)EnumTaskLogType.SystemError,
                 Msg = msg + " 错误信息:" + ex.Message + " 堆栈:" + ex.StackTrace,
-                TaskId = 0,
+                TaskId = 1,
                 NodeId = GlobalConfig.NodeId
             };
             AddError(model);

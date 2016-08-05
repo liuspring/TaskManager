@@ -8,7 +8,6 @@ using TaskManager.Nodes.Dto;
 
 namespace TaskManager.Nodes
 {
-    [AbpAuthorize(PermissionNames.Pages_Users)]
     public class NodeAppService : TaskManagerAppServiceBase, INodeAppService
     {
         private readonly IRepository<Node, int> _nodeRepository;

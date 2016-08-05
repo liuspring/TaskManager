@@ -4,7 +4,6 @@ using System.Linq;
 using Abp.Dependency;
 using TaskManager.HubService.SystemRuntime;
 using TaskManager.HubService.Tools;
-using TaskManager.Nodes;
 using TaskManager.Tasks;
 
 namespace TaskManager.HubService.SystemMonitor
@@ -15,7 +14,7 @@ namespace TaskManager.HubService.SystemMonitor
     /// </summary>
     public class TaskRecoverMonitor : BaseMonitor
     {
-        private readonly ITaskAppService _taskAppService;
+        private ITaskAppService _taskAppService;
 
         public TaskRecoverMonitor()
         {
@@ -33,6 +32,8 @@ namespace TaskManager.HubService.SystemMonitor
 
         protected override void Run()
         {
+            if (_taskAppService == null)
+                _taskAppService = IocManager.Instance.Resolve<ITaskAppService>();
             var tasks = _taskAppService.GetTasks(GlobalConfig.NodeId, (int)EnumTaskState.Stop);
             var currentscantaskids = new List<int>();
             foreach (var task in tasks)

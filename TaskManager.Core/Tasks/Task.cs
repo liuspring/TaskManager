@@ -111,7 +111,7 @@ namespace TaskManager.Tasks
         public virtual ICollection<Performances.Performance> Performances { get; protected set; }
 
         /// <summary>
-        /// 节点和任务性能记录表集合
+        /// 临时数据
         /// </summary>
         [ForeignKey("TaskId")]
         public virtual ICollection<TempDatas.TempData> TempDatas { get; protected set; }

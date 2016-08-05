@@ -1,62 +1,11 @@
 ﻿(function () {
     $(function () {
         var grid = new InitDataTables();
-        var commandService = abp.services.app.command;
-        var $modal = $("#CommandModal");
-        var $form = $modal.find('form');
-        //保存
-        $form.find('button[type="submit"]').click(function (e) {
-            e.preventDefault();
-            if (!$form.valid()) {
-                return;
-            }
-            var command = $form.serializeFormToObject();
-            abp.ui.setBusy($modal);
-            if (command.Id == "") {
-                commandService.create(command).done(function () {
-                    grid.submitFilter();
-                    $modal.modal("hide");
-                }).always(function () {
-                    abp.ui.clearBusy($modal);
-                });
-            } else {
-                commandService.update(command).done(function () {
-                    grid.submitFilter();
-                    $modal.modal("hide");
-                }).always(function () {
-                    abp.ui.clearBusy($modal);
-                });
-            }
-
-        });
-
-        $modal.on('shown.bs.modal', function () {
-            $("#Id").val("");
-            $("#CommandName").val("");
-            $("#CommandJson").val("");
-            $("#TaskId").val("");
-            $("#NodeId").val("");
-            $modal.find('input:not([type=hidden]):first').focus();
-        });
-
-        //编辑
-        $("#tb_command").on("click", "a.edit", function () {
-            commandService.getCommand($(this).data("value")).done(function (data) {
-                $modal.modal("show");
-                $("#Id").val(data.id);
-                $("#CommandName").val(data.commandName);
-                $("#CommandJson").val(data.commandJson);
-                $("#TaskId").val(data.taskId);
-                $("#NodeId").val(data.nodeId);
-
-            });
-        });
-
-
+        //var logService = abp.services.app.log;
         grid.init({
-            src: $("#tb_command"),
+            src: $("#tb_error"),
             dataTable: {
-                "sAjaxSource": "/Commands/AjaxCommandList", // get地址
+                "sAjaxSource": "/Errors/AjaxList", // get地址
                 //"pageLength": 2,
                 //向服务器传额外的参数
                 "fnServerParams": function (aoData) {
@@ -68,11 +17,12 @@
                 columns: [
                     //对应上面thead里面的序列 ;字段名字和返回的json序列的key对应
                     { "data": "id" },
-                    { "data": "nodeName" },
                     { "data": "taskName" },
-                    { "data": "sCommandName" },
-                    { "data": "commandJson" },
-                    { "data": "sCommandState" },
+                    { "data": "nodeName" },
+                    { "data": "creatorUserId" },
+                    { "data": "msg" },
+                    { "data": "sCreationTime" },
+                    { "data": "sLogType" },
                     { "data": "id" }
                 ],
                 //按钮列
@@ -86,13 +36,13 @@
                     {
                         "render": function (data, type, row, me) {
                             var opt = "";
-                            opt += '<a href="javascript:void(0)" data-value="' + data + '" ' +
-                                'class="btn default btn-xs green edit" title="编辑"><i class="fa fa-edit"></i>编辑</a>';
+                            opt += '<a href="/Tasks/Edit/' + data + '" class="btn btn-primary btn-xs green" ' +
+                                'title="查看详情"><i class="glyphicon glyphicon-eye-open"></i>查看详情</a>';
                             return opt;
                         },
                         'orderable': false,
                         'class': "hidden",
-                        "targets": 6
+                        "targets": 7
                     }
                 ]
             }

@@ -61,6 +61,23 @@ namespace TaskManager.Web
                         ))
                 ).AddItem(
                     new MenuItemDefinition(
+                        "性能查看",
+                        new LocalizableString("性能查看", TaskManagerConsts.LocalizationSourceName),
+                        url: "",
+                        icon: "fa fa-users"
+                        ).AddItem(new MenuItemDefinition(
+                        "任务性能分析",
+                        new LocalizableString("任务性能分析", TaskManagerConsts.LocalizationSourceName),
+                        url: "/logs/index",
+                        icon: "fa fa-circle-o"
+                        )).AddItem(new MenuItemDefinition(
+                        "节点性能分析",
+                        new LocalizableString("节点性能分析", TaskManagerConsts.LocalizationSourceName),
+                        url: "/errors/index",
+                        icon: "fa fa-circle-o"
+                        ))
+                ).AddItem(
+                    new MenuItemDefinition(
                         "迷失灵魂",
                         new LocalizableString("迷失灵魂", TaskManagerConsts.LocalizationSourceName),
                         url: "",

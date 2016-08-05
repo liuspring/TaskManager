@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using Abp.Web.Mvc.Authorization;
+using TaskManager.Authorization;
 using TaskManager.Logs;
 using TaskManager.Logs.Dto;
 
 namespace TaskManager.Web.Controllers
 {
-    public class LogsController : Controller
+    [AbpMvcAuthorize(PermissionNames.Pages_Users)]
+    public class LogsController : TaskManagerControllerBase
     {
         private readonly ILogAppService _logAppService;
 

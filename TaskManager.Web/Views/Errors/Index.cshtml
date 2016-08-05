@@ -2,17 +2,17 @@
 @using Common
 @using TaskManager.Enum
 @{
-    ViewBag.Title = "命令列表";
+    ViewBag.Title = "异常日志列表";
     ViewBag.TitleSmall = "";
 
     ViewBag.Breadcrumb = new Breadcrumb(new Crumb[] {
-        new Crumb("任务管理", "", "fa-dashboard"),
-        new Crumb("命令列表", "", "")
+        new Crumb("日志管理", "", "fa-dashboard"),
+        new Crumb("异常日志列表", "", "")
     });
 }
 @section scripts
 {
-    @Html.IncludeScript("~/Views/Commands/Index.js")
+    @Html.IncludeScript("~/Views/Logs/Index.js")
 }
 <div class="panel panel-default">
     <div class="panel-body">
@@ -29,86 +29,22 @@
         </div>
     </div>
 </div>
-
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div class="col-md-5">
-            <div class="input-group">
-                <a href="" class="btn btn-primary" data-toggle="modal" data-target="#CommandModal">新增</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="tab-content panel panel-default">
     <div class="panel-body active table-responsive">
-        <table id="tb_command" class="table table-bordered table-hover dataTable">
+        <table id="tb_error" class="table table-bordered table-hover dataTable">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>节点名称</th>
+                    <th>序号</th>
                     <th>任务名称</th>
-                    <th>命令json</th>
-                    <th>命令名称</th>
-                    <th>状态</th>
+                    <th>节点名称</th>
+                    <th>用户名</th>
+                    <th>内容</th>
+                    <th>创建时间</th>
+                    <th>类型</th>
                     <th class="hidden">操作</th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
-    </div>
-</div>
-
-<div class="modal fade" id="CommandModal" tabindex="-1" role="dialog" aria-labelledby="CommandModalLabel" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form name="CommandForm" role="form" novalidate class="form-horizontal">
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        <span>命令信息</span>
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="control-label col-lg-3" for="CommandName">命令名称</label>
-                            <div class="col-lg-8">
-                                @Html.DropDownList("CommandName", EnumExt.GetSelectList(typeof(EnumTaskCommandName)),
-                                new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="NodeId" class="col-md-3 control-label">节点</label>
-                            <div class="col-md-8">
-                                @Html.DropDownList("NodeId", ViewData["Nodes"] as SelectList, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="TaskId" class="col-md-3 control-label">任务</label>
-                            <div class="col-md-8">
-                                @Html.DropDownList("TaskId", ViewData["Tasks"] as SelectList, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="CommandJson" class="col-md-3 control-label">命令json</label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" name="CommandJson" id="CommandJson" maxlength="1000" required
-                                          rows="3" placeholder="请输入命令json"></textarea>
-                            </div>
-                            <div class="col-md-8  col-md-offset-3">
-                                <span class="help-block">示范:{"key1":"value1","key2":"value2"}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hidden">
-                        <input type="hidden" id="Id" name="Id" value="" />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> <span>保存</span></button>
-                </div>
-            </form>
-        </div>
     </div>
 </div>

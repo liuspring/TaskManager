@@ -1,5 +1,4 @@
-﻿
-using Abp.Dependency;
+﻿using Abp.Dependency;
 using TaskManager.Nodes;
 using TaskManager.Nodes.Dto;
 
@@ -11,7 +10,7 @@ namespace TaskManager.HubService.SystemMonitor
     /// </summary>
     public class NodeHeartBeatMonitor : BaseMonitor
     {
-        private readonly INodeAppService _nodeAppService;
+        private INodeAppService _nodeAppService;
         public override int Interval
         {
             get
@@ -27,6 +26,8 @@ namespace TaskManager.HubService.SystemMonitor
 
         protected override void Run()
         {
+            if (_nodeAppService == null)
+                _nodeAppService = IocManager.Instance.Resolve<INodeAppService>();
             // todo 更新并插入新的节点信息
             var node = _nodeAppService.GetNode(GlobalConfig.NodeId);
             if (node == null)

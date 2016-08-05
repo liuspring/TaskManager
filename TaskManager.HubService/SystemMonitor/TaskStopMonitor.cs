@@ -16,11 +16,11 @@ namespace TaskManager.HubService.SystemMonitor
     /// </summary>
     public class TaskStopMonitor : BaseMonitor
     {
-        private readonly ITaskAppService _taskAppService;
+        private ITaskAppService _taskAppService;
 
         public TaskStopMonitor()
         {
-            _taskAppService = IocManager.Instance.Resolve<ITaskAppService>(); ;
+            _taskAppService = IocManager.Instance.Resolve<ITaskAppService>(); 
         }
         public override int Interval
         {
@@ -34,7 +34,8 @@ namespace TaskManager.HubService.SystemMonitor
 
         protected override void Run()
         {
-
+            if(_taskAppService==null)
+                _taskAppService = IocManager.Instance.Resolve<ITaskAppService>();
             var tasks = _taskAppService.GetTasks(GlobalConfig.NodeId, (int)EnumTaskState.Running);
             var currentscantaskids = new List<int>();
             foreach (var task in tasks)
