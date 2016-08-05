@@ -58,11 +58,11 @@ namespace TaskManager.HubService.SystemMonitor
                             var performance = _performanceAppService.GetPerformance(taskruntimeinfo.TaskModel.Id);
                             if (performance == null)
                             {
-                                _performanceAppService.Update(input);
+                                _performanceAppService.Create(input);
                             }
                             else
                             {
-                                _performanceAppService.Create(input);
+                                _performanceAppService.Update(input);
                             }
                         }
                     }

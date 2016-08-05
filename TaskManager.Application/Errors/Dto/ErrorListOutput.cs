@@ -23,6 +23,9 @@ namespace TaskManager.Errors.Dto
             get { return Node.NodeName; }
         }
         public string Msg { get; set; }
+        public string SMsg {
+            get { return Msg.InterceptionStr(15); }
+        }
         public byte ErrorType { get; set; }
 
         public string SErrorType

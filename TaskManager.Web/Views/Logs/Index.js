@@ -20,7 +20,7 @@
                     { "data": "taskName" },
                     { "data": "nodeName" },
                     { "data": "creatorUserId" },
-                    { "data": "msg" },
+                    { "data": "sMsg" },
                     { "data": "sCreationTime" },
                     { "data": "sLogType" },
                     { "data": "id" }

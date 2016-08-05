@@ -1,17 +1,50 @@
-﻿@{
-    Layout = null;
+﻿@using Abp.Web.Mvc.Extensions
+@using Common
+@using TaskManager.Enum
+@{
+    ViewBag.Title = "性能分析";
+    ViewBag.TitleSmall = "";
+
+    ViewBag.Breadcrumb = new Breadcrumb(new Crumb[] {
+        new Crumb("性能查看", "", "fa-dashboard"),
+        new Crumb("性能分析", "", "")
+    });
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
+@section scripts
+{
+    @Html.IncludeScript("~/Views/Performance/Index.js")
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-md-6">
+            <div class="input-group">
+                @Html.DropDownList("Content", EnumExt.GetSelectList(typeof(EnumTaskCommandName)),
+                "", new { @class = "form-control" })
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="button" id="btnSearch">
+                        搜索
+                    </button>
+                </span>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+<div class="tab-content panel panel-default">
+    <div class="panel-body active table-responsive">
+        <table id="tb_log" class="table table-bordered table-hover dataTable">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>任务名称</th>
+                    <th>节点名称</th>
+                    <th>Cpu(总cpu时间 s)</th>
+                    <th>内存(M)</th>
+                    <th>应用大小</th>
+                    <th>最后更新时间</th>
+                    <th class="hidden">操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

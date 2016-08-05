@@ -25,7 +25,6 @@ namespace TaskManager.Performances
         public PerformanceOutput GetPerformance(int taskId)
         {
             var performance = _performanceRepository.GetAll().FirstOrDefault(a => a.TaskId == taskId);
-            performance = performance ?? new Performance();
             return performance.MapTo<PerformanceOutput>();
         }
 
